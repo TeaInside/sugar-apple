@@ -1,3 +1,32 @@
 <?php
 
+/**
+ * @author Ammar Faizi <ammarfaizi2@gmail.com>
+ * @license MIT
+ */
+
+
+/**
+ * Token
+ */
 define("TOKEN", "426180876:AAF-AuV9r5m68H2q_QEJZtoU3mLeMtTT8ew");
+
+/**
+ * Database
+ */
+define("DBHOST", "localhost");
+define("DBUSER", "debian-sys-maint");
+define("DBPASS", "");
+define("DBNAME", "pgice");
+
+/**
+ * Directory
+ */
+define("PUBLIC_DIR", __DIR__."/public");
+define("BASEPATH", __DIR__);
+
+
+/**
+ * Virtual
+ */
+define("PHPVIRTUAL_DIR", PUBLIC_DIR."/virtual/php");
