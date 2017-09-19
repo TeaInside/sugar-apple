@@ -35,7 +35,7 @@ final class Telegram
             }
         }
         curl_setopt_array($ch, $op);
-        print $out = curl_exec($ch);
+        print $out = curl_exec($ch); print "\n";
         $err = curl_error($ch) and $out = $err;
         $info = curl_getinfo($ch);
         curl_close($ch);
