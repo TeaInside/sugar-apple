@@ -113,7 +113,7 @@ class SaveEvent
 				), $st);
 			}
 		} else {
-			$st = DB::prepare("INSERT INTO `a_users` (`userid`,`username`,`name`,`photo`,`msg_count`,`private`,`notification`,`lang`,`created_at`) VALUES (:userid, :uname, :name, :photo, 1, 'false', 'true', 'en', :created_at);");
+			$st = DB::prepare("INSERT INTO `a_users` (`userid`,`username`,`name`,`photo`,`msg_count`,`private`,`notification`,`lang`,`created_at`) VALUES (:userid, :uname, :name, :photo, 1, 'false', 'false', 'en', :created_at);");
 			pc($st->execute(
 				[
 					":userid"		=> $this->h->userid,
