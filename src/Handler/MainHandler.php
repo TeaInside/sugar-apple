@@ -159,12 +159,23 @@ final class MainHandler
 			$this->date			= $this->input['message']['date'];
 			$this->chat_id		= $this->input['message']['chat']['id'];
 			$this->sticker		= $this->input['message']['sticker']['file_id'];
+		} elseif (isset($this->input['message']['new_chat_member'])) {
+			$this->msgtype  	= "new_chat_member";
+			$this->chattype 	= $this->input['message']['chat']['type'];
+			$this->username		= isset($this->input['message']['new_chat_member']['username']) ? strtolower($this->input['message']['new_chat_member']['username']) : null;
+			$this->first_name   = $this->input['message']['new_chat_member']['first_name'];
+			$this->last_name    = isset($this->input['message']['new_chat_member']['last_name']) ? $this->input['message']['new_chat_member']['last_name'] : null;
+			$this->name			= $this->first_name.(isset($this->last_name) ? " ".$this->last_name : "");
+			$this->userid		= $this->input['message']['new_chat_member']['id'];
+			$this->msgid		= $this->input['message']['message_id'];
+			$this->date			= $this->input['message']['date'];
+			$this->chat_id		= $this->input['message']['chat']['id'];
 		}
 	}
 
 	private function response()
 	{
-		if (in_array($this->msgtype, ["text", "photo", "sticker"])) {
+		if (in_array($this->msgtype, ["text", "photo", "sticker", "new_chat_member"])) {
 			$res = new Response($this);
 			$res->exec();
 		}
