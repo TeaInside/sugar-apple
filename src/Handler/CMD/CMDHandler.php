@@ -71,7 +71,7 @@ class CMDHandler
 			$sh = "<pre>~</pre>";
 		} else {
 			$sh = "<pre>".htmlspecialchars($sh)."</pre>";
-		}
+		} var_dump($this->h->chat_id);
 		return B::sendMessage(
 			[
 				"chat_id" 				=> $this->h->chat_id,
