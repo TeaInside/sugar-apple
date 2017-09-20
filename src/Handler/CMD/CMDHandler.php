@@ -58,8 +58,28 @@ class CMDHandler
 				]
 			);
 		}
-
 		return false;
+	}
+
+	/**
+	 * @param string $param
+	 */
+	private function __sh($param)
+	{
+		$sh = shell_exec($param." 2>&1");
+		if (empty($sh)) {
+			$sh = "<pre>~</pre>;";
+		} else {
+			$sh = "<pre>".htmlspecialchars($sh)."</pre>";
+		}
+		return B::sendMessage(
+			[
+				"chat_id" 				=> $this->h->chat_id,
+				"text"	  				=> $sh,
+				"parse_mode"			=> "HTML",
+				"reply_to_message_id"	=> $this->h->msgid
+			]
+		);
 	}
 
 	/**

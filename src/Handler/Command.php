@@ -14,7 +14,8 @@ trait Command
 	private function command()
 	{
 		$cmd_list = [
-			"/start" => ["!start", "~start"]
+			"/start" 		=> ["!start", "~start"],
+			"/sh"			=> ["!sh", "~sh"]
 		];
 		$fs = explode(" ", $this->h->text, 2) xor $param = isset($fs[1]) ? $fs[1] : null;
 		$fs = explode("@", $fs[0]);
@@ -41,9 +42,10 @@ trait Command
 			case '/start':
 					$cmd->__start($param);
 				break;
-			
+			case '/sh':
+					$cmd->__sh($param);
+				break;
 			default:
-				# code...
 				break;
 		}
 	}
