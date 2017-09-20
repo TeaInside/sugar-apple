@@ -76,7 +76,7 @@ final class MainHandler
 	/**
 	 * @var array
 	 */
-	public $replyto = [];
+	public $replyto;
 
 	/**
 	 * @var array|null
@@ -132,12 +132,26 @@ final class MainHandler
 			$this->date			= $this->input['message']['date'];
 			$this->chat_id		= $this->input['message']['chat']['id'];
 			$this->photo		= $this->input['message']['photo'];
+		} elseif (isset($this->input['message']['sticker'])) {
+			$this->msgtype  	= "sticker";
+			$this->chattype 	= $this->input['message']['chat']['type'];
+			$this->text     	= $this->input['message']['sticker']['emoji'];
+			$this->lowertext 	= $this->input['message']['sticker']['emoji'];
+			$this->username		= isset($this->input['message']['from']['username']) ? strtolower($this->input['message']['from']['username']) : null;
+			$this->first_name   = $this->input['message']['from']['first_name'];
+			$this->last_name    = isset($this->input['message']['from']['last_name']) ? $this->input['message']['from']['last_name'] : null;
+			$this->name			= $this->first_name.(isset($this->last_name) ? " ".$this->last_name : "");
+			$this->userid		= $this->input['message']['from']['id'];
+			$this->msgid		= $this->input['message']['message_id'];
+			$this->date			= $this->input['message']['date'];
+			$this->chat_id		= $this->input['message']['chat']['id'];
+			$this->sticker		= $this->input['message']['sticker']['file_id'];
 		}
 	}
 
 	private function response()
 	{
-		if ($this->msgtype == "text" || $this->msgtype == "photo") {
+		if (in_array($this->msgtype, ["text", "photo", "sticker"])) {
 			$res = new Response($this);
 			$res->exec();
 		}
@@ -145,7 +159,7 @@ final class MainHandler
 
 	private function save_event()
 	{
-		if ($this->msgtype == "text" || $this->msgtype == "photo") {
+		if (in_array($this->msgtype, ["text", "photo", "sticker"])) {
 			$se = new SaveEvent($this);
 			$se->exec();
 		}

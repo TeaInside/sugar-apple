@@ -98,6 +98,10 @@ class SaveEvent
 				$data[':txt']		= $this->h->text;
 				$data[':file_id']	= $ed['file_id'];
 				break;
+			case 'sticker':
+				$data[':txt']		= $this->h->text;
+				$data[':file_id']	= $this->h->sticker;
+				break;
 			default:
 				break;
 		}

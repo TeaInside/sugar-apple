@@ -8,9 +8,9 @@ require __DIR__."/../../autoload.php";
  */
 
 $fake_webhook = '{
-    "update_id": 44178218,
+    "update_id": 44178220,
     "message": {
-        "message_id": 116,
+        "message_id": 118,
         "from": {
             "id": 243692601,
             "is_bot": false,
@@ -26,41 +26,21 @@ $fake_webhook = '{
             "username": "ammarfaizi2",
             "type": "private"
         },
-        "date": 1505923714,
-        "reply_to_message": {
-            "message_id": 110,
-            "from": {
-                "id": 426180876,
-                "is_bot": true,
-                "first_name": "Dead Inside",
-                "username": "SugarAppleBot"
+        "date": 1505924203,
+        "sticker": {
+            "width": 512,
+            "height": 512,
+            "emoji": "\u2728",
+            "set_name": "fangirl_line",
+            "thumb": {
+                "file_id": "AAQEABPGgWEZAAQJraGHZ9C3KUB5AAIC",
+                "file_size": 5000,
+                "width": 128,
+                "height": 128
             },
-            "chat": {
-                "id": 243692601,
-                "first_name": "Ammar",
-                "last_name": "F",
-                "username": "ammarfaizi2",
-                "type": "private"
-            },
-            "date": 1505923377,
-            "text": "123",
-            "entities": [
-                {
-                    "offset": 0,
-                    "length": 3,
-                    "type": "pre"
-                }
-            ]
-        },
-        "photo": [
-            {
-                "file_id": "AgADBQAD8KcxGxYlEVYy-bXQUtljUYUozDIABDUIAAF-nK5mqnycAgABAg",
-                "file_size": 293,
-                "width": 26,
-                "height": 21
-            }
-        ],
-        "caption": "text"
+            "file_id": "CAADBAADYwIAAkcsHgABRJq1A1dLZ9kC",
+            "file_size": 27112
+        }
     }
 }';
 
