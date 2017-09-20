@@ -83,7 +83,7 @@ class SaveEvent
 				":msg_uniq"		=> ($data[':msg_uniq'] = $this->h->userid."|".$this->h->msgid),
 				":msgid"		=> $this->h->msgid,
 				":type"			=> $this->h->msgtype,
-				":replyto"		=> (isset($this->h->replyto) ? $this->h->replyto : null),
+				":replyto"		=> (isset($this->h->replyto) ? $this->h->replyto['message_id'] : null),
 				":time"			=> (date("Y-m-d H:i:s", $this->h->date)),
 				":created_at"	=> (date("Y-m-d H:i:s"))
 			]), $st);
