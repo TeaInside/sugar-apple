@@ -8,3 +8,5 @@ function __load_class($class)
 }
 
 spl_autoload_register("__load_class");
+
+// perubahan
