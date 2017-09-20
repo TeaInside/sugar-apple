@@ -2,10 +2,13 @@
 
 namespace Handler;
 
+use Handler\Command;
 use Handler\MainHandler;
 
 final class Response
 {	
+	use Command;
+
 	/**
 	 * @var Handler\MainHandler
 	 */
@@ -18,6 +21,16 @@ final class Response
 
 	public function textResponse()
 	{
-		
+		if (! $this->command()) {
+			if (! $this->__lang_virtualizor()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private function __lang_virtualizor()
+	{
+
 	}
 }
