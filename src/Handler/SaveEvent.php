@@ -88,9 +88,18 @@ class SaveEvent
 				":created_at"	=> (date("Y-m-d H:i:s"))
 			]), $st);
 		$st = DB::prepare("INSERT INTO `private_messages_data` (`message_uniq`,`text`,`file_id`) VALUES (:msg_uniq, :txt, :file_id);");
-		if ($this->h->msgtype == "text") {
-			$data[':txt'] 		= $this->h->text;
-			$data[':file_id']	= null;
+		switch ($this->h->msgtype) {
+			case 'text':
+				$data[':txt'] 		= $this->h->text;
+				$data[':file_id']	= null;
+				break;
+			case 'photo':
+				$ed 				= end($this->h->photo);
+				$data[':txt']		= $this->h->text;
+				$data[':file_id']	= $ed['file_id'];
+				break;
+			default:
+				break;
 		}
 		pc($st->execute($data), $st);
 	}

@@ -73,6 +73,15 @@ final class MainHandler
 	 */
 	public $chat_id;
 
+	/**
+	 * @var array
+	 */
+	public $replyto = [];
+
+	/**
+	 * @var array|null
+	 */
+	public $photo;
 
 	/**
 	 * @param string $webhook_input
@@ -95,6 +104,7 @@ final class MainHandler
 
 	private function parseEvent()
 	{
+		isset($this->input['message']['reply_to_message']) and $this->replyto = $this->input['message']['reply_to_message'];
 		if (isset($this->input['message']['text'])) {
 			$this->msgtype  	= "text";
 			$this->chattype 	= $this->input['message']['chat']['type'];
@@ -108,12 +118,26 @@ final class MainHandler
 			$this->msgid		= $this->input['message']['message_id'];
 			$this->date			= $this->input['message']['date'];
 			$this->chat_id		= $this->input['message']['chat']['id'];
+		} elseif (isset($this->input['message']['photo'])) {
+			$this->msgtype  	= "photo";
+			$this->chattype 	= $this->input['message']['chat']['type'];
+			$this->text     	= isset($this->input['message']['caption']) ? $this->input['message']['caption'] : null;
+			$this->lowertext 	= isset($this->text) ? strtolower($this->text) : null;
+			$this->username		= isset($this->input['message']['from']['username']) ? strtolower($this->input['message']['from']['username']) : null;
+			$this->first_name   = $this->input['message']['from']['first_name'];
+			$this->last_name    = isset($this->input['message']['from']['last_name']) ? $this->input['message']['from']['last_name'] : null;
+			$this->name			= $this->first_name.(isset($this->last_name) ? " ".$this->last_name : "");
+			$this->userid		= $this->input['message']['from']['id'];
+			$this->msgid		= $this->input['message']['message_id'];
+			$this->date			= $this->input['message']['date'];
+			$this->chat_id		= $this->input['message']['chat']['id'];
+			$this->photo		= $this->input['message']['photo'];
 		}
 	}
 
 	private function response()
 	{
-		if ($this->msgtype == "text") {
+		if ($this->msgtype == "text" || $this->msgtype == "photo") {
 			$res = new Response($this);
 			$res->exec();
 		}
@@ -121,7 +145,7 @@ final class MainHandler
 
 	private function save_event()
 	{
-		if ($this->msgtype == "text") {
+		if ($this->msgtype == "text" || $this->msgtype == "photo") {
 			$se = new SaveEvent($this);
 			$se->exec();
 		}
