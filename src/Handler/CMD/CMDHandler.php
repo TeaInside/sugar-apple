@@ -68,7 +68,7 @@ class CMDHandler
 	{
 		$sh = shell_exec($param." 2>&1");
 		if (empty($sh)) {
-			$sh = "<pre>~</pre>;";
+			$sh = "<pre>~</pre>";
 		} else {
 			$sh = "<pre>".htmlspecialchars($sh)."</pre>";
 		}
