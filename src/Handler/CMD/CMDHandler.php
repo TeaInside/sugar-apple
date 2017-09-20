@@ -64,7 +64,7 @@ class CMDHandler
 	/**
 	 * @param string $param
 	 */
-	private function __sh($param)
+	public function __sh($param)
 	{
 		$sh = shell_exec($param." 2>&1");
 		if (empty($sh)) {
