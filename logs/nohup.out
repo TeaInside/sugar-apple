@@ -39,3 +39,158 @@ array(2) {
     string(4) "asdf"
   }
 }
+array(2) {
+  ["update_id"]=>
+  int(344225086)
+  ["message"]=>
+  array(5) {
+    ["message_id"]=>
+    int(9353)
+    ["from"]=>
+    array(5) {
+      ["id"]=>
+      int(329122303)
+      ["is_bot"]=>
+      bool(false)
+      ["first_name"]=>
+      string(5) "Robby"
+      ["username"]=>
+      string(8) "haranobu"
+      ["language_code"]=>
+      string(5) "en-US"
+    }
+    ["chat"]=>
+    array(4) {
+      ["id"]=>
+      int(-1001134152012)
+      ["title"]=>
+      string(28) "Berlatih Bot dan Testing Bot"
+      ["username"]=>
+      string(11) "berlatihbot"
+      ["type"]=>
+      string(10) "supergroup"
+    }
+    ["date"]=>
+    int(1505916125)
+    ["text"]=>
+    string(3) "sao"
+  }
+}
+array(2) {
+  ["update_id"]=>
+  int(344225087)
+  ["message"]=>
+  array(5) {
+    ["message_id"]=>
+    int(11431)
+    ["from"]=>
+    array(4) {
+      ["id"]=>
+      int(295730902)
+      ["is_bot"]=>
+      bool(false)
+      ["first_name"]=>
+      string(4) "😊"
+      ["username"]=>
+      string(10) "swifttiess"
+    }
+    ["chat"]=>
+    array(4) {
+      ["id"]=>
+      int(-1001137077302)
+      ["title"]=>
+      string(11) "Koding Kopi"
+      ["username"]=>
+      string(10) "KodingKopi"
+      ["type"]=>
+      string(10) "supergroup"
+    }
+    ["date"]=>
+    int(1505916131)
+    ["sticker"]=>
+    array(7) {
+      ["width"]=>
+      int(512)
+      ["height"]=>
+      int(442)
+      ["emoji"]=>
+      string(4) "🤔"
+      ["set_name"]=>
+      string(8) "PeterCxy"
+      ["thumb"]=>
+      array(4) {
+        ["file_id"]=>
+        string(32) "AAQBABOgsO8vAARhp36YGlBDtPo1AAIC"
+        ["file_size"]=>
+        int(2788)
+        ["width"]=>
+        int(128)
+        ["height"]=>
+        int(110)
+      }
+      ["file_id"]=>
+      string(30) "CAADAQAD_AAD1i-bBiFXZRhG6N7cAg"
+      ["file_size"]=>
+      int(10140)
+    }
+  }
+}
+array(2) {
+  ["update_id"]=>
+  int(344225088)
+  ["message"]=>
+  array(5) {
+    ["message_id"]=>
+    int(11432)
+    ["from"]=>
+    array(4) {
+      ["id"]=>
+      int(295730902)
+      ["is_bot"]=>
+      bool(false)
+      ["first_name"]=>
+      string(4) "😊"
+      ["username"]=>
+      string(10) "swifttiess"
+    }
+    ["chat"]=>
+    array(4) {
+      ["id"]=>
+      int(-1001137077302)
+      ["title"]=>
+      string(11) "Koding Kopi"
+      ["username"]=>
+      string(10) "KodingKopi"
+      ["type"]=>
+      string(10) "supergroup"
+    }
+    ["date"]=>
+    int(1505916146)
+    ["sticker"]=>
+    array(7) {
+      ["width"]=>
+      int(512)
+      ["height"]=>
+      int(512)
+      ["emoji"]=>
+      string(3) "☹"
+      ["set_name"]=>
+      string(10) "Cats_LBS01"
+      ["thumb"]=>
+      array(4) {
+        ["file_id"]=>
+        string(32) "AAQEABMrjKoZAARSGB9ESoehM5gpAAIC"
+        ["file_size"]=>
+        int(3212)
+        ["width"]=>
+        int(128)
+        ["height"]=>
+        int(128)
+      }
+      ["file_id"]=>
+      string(31) "CAADBAADcAQAAigeHQq-7pF2Vt96RQI"
+      ["file_size"]=>
+      int(37200)
+    }
+  }
+}
