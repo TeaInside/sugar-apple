@@ -85,6 +85,7 @@ CREATE TABLE `private_messages` (
   `message_id` bigint(20) NOT NULL,
   `type` enum('text','photo','sticker','video','unknown') NOT NULL DEFAULT 'unknown',
   `reply_to_message_id` bigint(20) DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`message_uniq`),
   KEY `userid` (`userid`),
@@ -155,4 +156,4 @@ CREATE TABLE `user_warn` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2017-09-20 15:22:50
+-- 2017-09-20 15:59:56

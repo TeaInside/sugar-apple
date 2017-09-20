@@ -26,7 +26,7 @@ class SaveEvent
 		$this->h = $handler;
 	}
 
-	public function save()
+	public function exec()
 	{
 		if ($this->h->chattype == "private") {
 			$this->private_save();
@@ -48,16 +48,51 @@ class SaveEvent
 				$st['name']		!= $this->h->name		||
 				$st['private']	!= "true"
 			) {
-				$st = DB::prepare("UPDATE `a_users` SET `username`=:uname, `name`=:name, `private`='true', `msg_count`=`msg_count`+1 WHERE `userid`=:userid LIMIT 1;");
+				$st = DB::prepare("UPDATE `a_users` SET `username`=:uname, `name`=:name, `private`='true', `updated_at`=:up, `msg_count`=`msg_count`+1 WHERE `userid`=:userid LIMIT 1;");
 				pc($st->execute(
 					[
 						":uname"	=> $this->h->username,
 						":name"		=> $this->h->name,
+						":up"		=> (date("Y-m-d H:i:s")),
 						":userid"	=> $this->h->userid
 					]
 				), $st);
+			} else {
+				$st = DB::prepare("UPDATE `a_users` SET `msg_count`=`msg_count`+1, `updated_at`=:up WHERE `userid`=:userid LIMIT 1;");
+				pc($st->execute(
+					[
+						":up"		=> (date("Y-m-d H:i:s")),
+						":userid" 	=> $this->h->userid
+					]), $st);
 			}
+		} else {
+			$st = DB::prepare("INSERT INTO `a_users` (`userid`,`username`,`name`,`photo`,`msg_count`,`private`,`notification`,`lang`,`created_at`) VALUES (:userid, :uname, :name, :photo, 1, 'true', 'true', 'en', :created_at);");
+			pc($st->execute(
+				[
+					":userid"		=> $this->h->userid,
+					":uname"		=> $this->h->username,
+					":name"			=> $this->h->name,
+					":photo"		=> null,
+					":created_at"	=> (date("Y-m-d H:i:s"))
+				]), $st);
 		}
+		$st = DB::prepare("INSERT INTO `private_messages` (`userid`,`message_uniq`,`message_id`,`type`,`reply_to_message_id`,`time`,`created_at`) VALUES (:userid, :msg_uniq, :msgid, :type, :replyto, :time, :created_at);") xor $data = [];
+		pc($st->execute(
+			[
+				":userid" 		=> $this->h->userid,
+				":msg_uniq"		=> ($data[':msg_uniq'] = $this->h->userid."|".$this->h->msgid),
+				":msgid"		=> $this->h->msgid,
+				":type"			=> $this->h->msgtype,
+				":replyto"		=> (isset($this->h->replyto) ? $this->h->replyto : null),
+				":time"			=> (date("Y-m-d H:i:s", $this->h->date)),
+				":created_at"	=> (date("Y-m-d H:i:s"))
+			]), $st);
+		$st = DB::prepare("INSERT INTO `private_messages_data` (`message_uniq`,`text`,`file_id`) VALUES (:msg_uniq, :txt, :file_id);");
+		if ($this->h->msgtype == "text") {
+			$data[':txt'] 		= $this->h->text;
+			$data[':file_id']	= null;
+		}
+		pc($st->execute($data), $st);
 	}
 }
 

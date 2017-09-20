@@ -90,6 +90,7 @@ final class MainHandler
 	{
 		$this->parseEvent();
 		$this->response();
+		$this->save_event();
 	}
 
 	private function parseEvent()
