@@ -27,7 +27,7 @@ $fake_webhook = '{
             "type": "private"
         },
         "date": 1505836180,
-        "text": "qwe"
+        "text": "/start"
     }
 }';
 

@@ -15,62 +15,62 @@ final class MainHandler
 	/**
 	 * @var array
 	 */
-	private $event = [];
+	public $event = [];
 
 	/**
 	 * @var string
 	 */
-	private $msgtype;
+	public $msgtype;
 
 	/**
 	 * @var string
 	 */
-	private $chattype;
+	public $chattype;
 
 	/**
 	 * @var string
 	 */
-	private $text;
+	public $text;
 
 	/**
 	 * @var string
 	 */
-	private $lowertext;
+	public $lowertext;
 
 	/**
 	 * @var string
 	 */
-	private $username;
+	public $username;
 
 	/**
 	 * @var string
 	 */
-	private $first_name;
+	public $first_name;
 
 	/**
 	 * @var string
 	 */
-	private $last_name;
+	public $last_name;
 
 	/**
 	 * @var string
 	 */
-	private $userid;
+	public $userid;
 
 	/**
 	 * @var string
 	 */
-	private $msgid;
+	public $msgid;
 
 	/**
 	 * @var string
 	 */
-	private $date;
+	public $date;
 
 	/**
 	 * @var string
 	 */
-	private $chat_id;
+	public $chat_id;
 
 
 	/**

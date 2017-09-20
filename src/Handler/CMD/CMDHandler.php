@@ -29,6 +29,7 @@ class CMDHandler
 
 	public function __start($param)
 	{
+		var_dump(123);
 		$this->lang .= "A";
 		B::sendMesssage(
 			[

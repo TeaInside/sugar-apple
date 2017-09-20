@@ -19,7 +19,7 @@ final class Response
 		$this->h = $handler;
 	}
 
-	public function textResponse()
+	public function exec()
 	{
 		if (! $this->command()) {
 			if (! $this->__lang_virtualizor()) {

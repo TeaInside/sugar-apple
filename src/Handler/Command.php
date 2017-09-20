@@ -2,6 +2,7 @@
 
 namespace Handler;
 
+use Handler\CMD\CMDHandler;
 
 trait Command
 {
@@ -10,7 +11,7 @@ trait Command
 		$cmd_list = [
 			"/start" => ["!start", "~start"]
 		];
-		$fs = explode(" ", $this->text, 2) xor $param = isset($fs[1]) ? $fs[1] : null;
+		$fs = explode(" ", $this->h->text, 2) xor $param = isset($fs[1]) ? $fs[1] : null;
 		$fs = explode("@", $fs[0]);
 		$fs = strtolower($fs[0]);
 		foreach ($cmd_list as $key => $val) {
@@ -29,7 +30,8 @@ trait Command
 
 	private function __command($key, $param = null)
 	{
-		$cmd = new CMDHandler($this);
+		var_dump($key);
+		$cmd = new CMDHandler($this->h);
 		switch ($key) {
 			case '/start':
 					$cmd->__start($param);
