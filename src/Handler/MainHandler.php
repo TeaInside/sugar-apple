@@ -102,6 +102,7 @@ final class MainHandler
 			$this->username		= isset($this->input['message']['from']['username']) ? strtolower($this->input['message']['from']['username']) : null;
 			$this->first_name   = $this->input['message']['from']['first_name'];
 			$this->last_name    = isset($this->input['message']['from']['last_name']) ? $this->input['message']['from']['last_name'] : null;
+			$this->name			= $this->first_name.(isset($this->last_name) ? " ".$this->last_name : "");
 			$this->userid		= $this->input['message']['from']['id'];
 			$this->msgid		= $this->input['message']['message_id'];
 			$this->date			= $this->input['message']['date'];
