@@ -46,8 +46,8 @@ CREATE TABLE `groups_admin` (
   `updated_at` datetime DEFAULT NULL,
   KEY `group_id` (`group_id`),
   KEY `userid` (`userid`),
-  CONSTRAINT `groups_admin_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `a_groups` (`group_id`),
-  CONSTRAINT `groups_admin_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`)
+  CONSTRAINT `groups_admin_ibfk_4` FOREIGN KEY (`group_id`) REFERENCES `a_groups` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `groups_admin_ibfk_5` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -63,8 +63,8 @@ CREATE TABLE `group_messages` (
   PRIMARY KEY (`message_uniq`),
   KEY `group_id` (`group_id`),
   KEY `userid` (`userid`),
-  CONSTRAINT `group_messages_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `a_groups` (`group_id`),
-  CONSTRAINT `group_messages_ibfk_3` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`)
+  CONSTRAINT `group_messages_ibfk_5` FOREIGN KEY (`group_id`) REFERENCES `a_groups` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `group_messages_ibfk_6` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -74,7 +74,7 @@ CREATE TABLE `group_messages_data` (
   `text` text,
   `file_id` varchar(255) DEFAULT NULL,
   KEY `message_uniq` (`message_uniq`),
-  CONSTRAINT `group_messages_data_ibfk_1` FOREIGN KEY (`message_uniq`) REFERENCES `group_messages` (`message_uniq`)
+  CONSTRAINT `group_messages_data_ibfk_2` FOREIGN KEY (`message_uniq`) REFERENCES `group_messages` (`message_uniq`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -88,9 +88,9 @@ CREATE TABLE `private_messages` (
   `time` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`message_uniq`),
-  KEY `userid` (`userid`),
   KEY `message_id` (`message_id`),
-  CONSTRAINT `private_messages_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`)
+  KEY `userid` (`userid`),
+  CONSTRAINT `private_messages_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -100,7 +100,7 @@ CREATE TABLE `private_messages_data` (
   `text` text,
   `file_id` varchar(255) DEFAULT NULL,
   KEY `message_uniq` (`message_uniq`),
-  CONSTRAINT `private_messages_data_ibfk_1` FOREIGN KEY (`message_uniq`) REFERENCES `private_messages` (`message_uniq`)
+  CONSTRAINT `private_messages_data_ibfk_2` FOREIGN KEY (`message_uniq`) REFERENCES `private_messages` (`message_uniq`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -112,7 +112,7 @@ CREATE TABLE `private_outbox` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   KEY `userid` (`userid`),
-  CONSTRAINT `private_outbox_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`)
+  CONSTRAINT `private_outbox_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -127,7 +127,7 @@ CREATE TABLE `save_content` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`content_id`),
   KEY `userid` (`userid`),
-  CONSTRAINT `save_content_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`)
+  CONSTRAINT `save_content_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -137,7 +137,7 @@ CREATE TABLE `save_content_data` (
   `text` text,
   `file_id` varchar(255) DEFAULT NULL,
   KEY `content_id` (`content_id`),
-  CONSTRAINT `save_content_data_ibfk_1` FOREIGN KEY (`content_id`) REFERENCES `save_content` (`content_id`)
+  CONSTRAINT `save_content_data_ibfk_2` FOREIGN KEY (`content_id`) REFERENCES `save_content` (`content_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -151,9 +151,9 @@ CREATE TABLE `user_warn` (
   `updated_at` datetime NOT NULL,
   KEY `group_id` (`group_id`),
   KEY `userid` (`userid`),
-  CONSTRAINT `user_warn_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `a_groups` (`group_id`),
-  CONSTRAINT `user_warn_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`)
+  CONSTRAINT `user_warn_ibfk_3` FOREIGN KEY (`group_id`) REFERENCES `a_groups` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_warn_ibfk_4` FOREIGN KEY (`userid`) REFERENCES `a_users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2017-09-20 15:59:56
+-- 2017-09-20 16:36:57
