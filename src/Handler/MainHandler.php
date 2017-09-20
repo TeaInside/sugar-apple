@@ -6,6 +6,8 @@ namespace Handler;
  * @author Ammar Faizi <ammarfaizi2@gmail.com>
  */
 
+use Telegram as B;
+
 final class MainHandler
 {
 	/**
@@ -63,6 +65,11 @@ final class MainHandler
 	 */
 	private $date;
 
+	/**
+	 * @var string
+	 */
+	private $chat_id;
+
 
 	/**
 	 * @param string $webhook_input
@@ -79,7 +86,7 @@ final class MainHandler
 	public function run()
 	{
 		$this->parseEvent();
-		var_dump($this->input);
+		$this->response();
 	}
 
 	private function parseEvent()
@@ -95,6 +102,18 @@ final class MainHandler
 			$this->userid		= $this->input['message']['from']['id'];
 			$this->msgid		= $this->input['message']['message_id'];
 			$this->date			= $this->input['message']['date'];
+			$this->chat_id		= $this->input['message']['chat']['id'];
+		}
+	}
+
+	private function response()
+	{
+		if ($this->chattype == "text") {
+			B::sendMessage([
+				"text" => $this->text,
+				"chat_id" => $this->chat_id
+			]);
 		}
 	}
 }
+

@@ -24,7 +24,7 @@ define("DBNAME", "pgice");
  */
 define("PUBLIC_DIR", __DIR__."/public");
 define("BASEPATH", __DIR__);
-
+define("LOG_DIR", __DIR__."/logs");
 
 /**
  * Virtual
