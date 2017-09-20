@@ -72,6 +72,7 @@ final class MainHandler
 
 
 	/**
+
 	 * @param string $webhook_input
 	 */
 	public function __construct($webhook_input = null)
@@ -108,7 +109,7 @@ final class MainHandler
 
 	private function response()
 	{
-		if ($this->chattype == "text") {
+		if ($this->msgtype == "text") {
 			B::sendMessage([
 				"text" => $this->text,
 				"chat_id" => $this->chat_id
