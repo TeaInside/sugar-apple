@@ -79,6 +79,7 @@ final class MainHandler
 	public function run()
 	{
 		$this->parseEvent();
+		var_dump($this->input);
 	}
 
 	private function parseEvent()
