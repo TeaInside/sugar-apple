@@ -1,0 +1,41 @@
+array(2) {
+  ["update_id"]=>
+  int(44178139)
+  ["message"]=>
+  array(5) {
+    ["message_id"]=>
+    int(4)
+    ["from"]=>
+    array(6) {
+      ["id"]=>
+      int(243692601)
+      ["is_bot"]=>
+      bool(false)
+      ["first_name"]=>
+      string(5) "Ammar"
+      ["last_name"]=>
+      string(1) "F"
+      ["username"]=>
+      string(11) "ammarfaizi2"
+      ["language_code"]=>
+      string(5) "en-US"
+    }
+    ["chat"]=>
+    array(5) {
+      ["id"]=>
+      int(243692601)
+      ["first_name"]=>
+      string(5) "Ammar"
+      ["last_name"]=>
+      string(1) "F"
+      ["username"]=>
+      string(11) "ammarfaizi2"
+      ["type"]=>
+      string(7) "private"
+    }
+    ["date"]=>
+    int(1505916111)
+    ["text"]=>
+    string(4) "asdf"
+  }
+}
