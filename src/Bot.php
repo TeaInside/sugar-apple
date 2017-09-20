@@ -18,6 +18,7 @@ final class Bot
 
 	public function run()
 	{
-		$app = new 
+		$app = new MainHandler($this->input);
+		$app->run();
 	}
 }

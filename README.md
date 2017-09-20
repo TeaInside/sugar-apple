@@ -1,2 +1,1 @@
-# sugar-apple
-Telegram Bot
+# Telegram Bot

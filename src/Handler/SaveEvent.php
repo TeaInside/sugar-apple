@@ -19,4 +19,9 @@ class SaveEvent
 	{
 		$this->event = $event;
 	}
+
+	public function save()
+	{
+		
+	}
 }
