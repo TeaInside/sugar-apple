@@ -2,6 +2,8 @@
 
 namespace Handler\CMD;
 
+use DB;
+use PDO;
 use Lang\Map;
 use Telegram as B;
 use Handler\MainHandler;
@@ -80,6 +82,70 @@ class CMDHandler
 				"reply_to_message_id"	=> $this->h->msgid
 			]
 		);
+	}
+
+	public function __welcome($param)
+	{
+		$this->lang .= "A";
+		if (! empty($param)) {
+			$st = DB::prepare("UPDATE `a_groups` SET `welcome_message`=:wel, `updated_at`=:up WHERE `group_id`=:gid LIMIT 1;");
+			pc($st->execute(
+				[
+					":wel"		=> $param,
+					":up"		=> (date("Y-m-d H:i:s")),
+					":group_id"	=> $this->h->chat_id
+				]
+			), $st);
+			return B::sendMessage(
+				[
+					"chat_id" 				=> $this->h->chat_id,
+					"text"	  				=> $this->fixer($this->lang::$a['set_welcome_msg']),
+					"reply_to_message_id"	=> $this->h->msgid
+				]
+			);
+		} else {
+			$st = DB::prepare("SELECT `welcome_message` FROM `a_groups` WHERE `group_id`=:gid LIMIT 1;");
+			pc($st->execute(
+				[
+					":gid" => $this->h->chat_id
+				]
+			), $st);
+			if ($st = $st->fetch(PDO::FETCH_NUM)) {
+				if (! empty($st[0])) {
+					$st = DB::prepare("UPDATE `a_groups` SET `welcome_message`=:wel, `updated_at`=:up WHERE `group_id`=:gid LIMIT 1;");
+					pc($st->execute(
+						[
+							":wel"		=> null,
+							":up"		=> (date("Y-m-d H:i:s")),
+							":group_id"	=> $this->h->chat_id
+						]
+					), $st);
+					return B::sendMessage(
+						[
+							"chat_id" 				=> $this->h->chat_id,
+							"text"	  				=> $this->fixer($this->lang::$a['error_empty_set_welcome_msg']),
+							"reply_to_message_id"	=> $this->h->msgid
+						]
+					);
+				} else {
+					$st = DB::prepare("UPDATE `a_groups` SET `welcome_message`=:wel, `updated_at`=:up WHERE `group_id`=:gid LIMIT 1;");
+					pc($st->execute(
+						[
+							":wel"		=> null,
+							":up"		=> (date("Y-m-d H:i:s")),
+							":group_id"	=> $this->h->chat_id
+						]
+					), $st);
+					return B::sendMessage(
+						[
+							"chat_id" 				=> $this->h->chat_id,
+							"text"	  				=> $this->fixer($this->lang::$a['drop_welcome_msg']),
+							"reply_to_message_id"	=> $this->h->msgid
+						]
+					);
+				}
+			}
+		}
 	}
 
 	/**

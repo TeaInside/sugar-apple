@@ -15,9 +15,10 @@ trait Command
 	{
 		$cmd_list = [
 			"/start" 		=> ["!start", "~start"],
-			"/sh"			=> ["!sh", "~sh"]
+			"/sh"			=> ["!sh", "~sh"],
+			"/welcome"		=> ["!welcome", "~welcome"]
 		];
-		$fs = explode(" ", $this->h->text, 2) xor $param = isset($fs[1]) ? $fs[1] : null;
+		$fs = explode(" ", $this->h->text, 2) xor $param = isset($fs[1]) ? trim($fs[1]) : null;
 		$fs = explode("@", $fs[0]);
 		$fs = strtolower($fs[0]);
 		foreach ($cmd_list as $key => $val) {
@@ -36,7 +37,6 @@ trait Command
 
 	private function __command($key, $param = null)
 	{
-		var_dump($key);
 		$cmd = new CMDHandler($this->h);
 		switch ($key) {
 			case '/start':
@@ -44,6 +44,9 @@ trait Command
 				break;
 			case '/sh':
 					$cmd->__sh($param);
+				break;
+			case '/welcome':
+					$cmd->__welcome($param);
 				break;
 			default:
 				break;
