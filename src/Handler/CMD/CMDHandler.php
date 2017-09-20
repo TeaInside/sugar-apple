@@ -93,7 +93,7 @@ class CMDHandler
 				[
 					":wel"		=> $param,
 					":up"		=> (date("Y-m-d H:i:s")),
-					":group_id"	=> $this->h->chat_id
+					":gid"	=> $this->h->chat_id
 				]
 			), $st);
 			return B::sendMessage(
@@ -117,7 +117,7 @@ class CMDHandler
 						[
 							":wel"		=> null,
 							":up"		=> (date("Y-m-d H:i:s")),
-							":group_id"	=> $this->h->chat_id
+							":gid"	=> $this->h->chat_id
 						]
 					), $st);
 					return B::sendMessage(
@@ -133,7 +133,7 @@ class CMDHandler
 						[
 							":wel"		=> null,
 							":up"		=> (date("Y-m-d H:i:s")),
-							":group_id"	=> $this->h->chat_id
+							":gid"	=> $this->h->chat_id
 						]
 					), $st);
 					return B::sendMessage(
