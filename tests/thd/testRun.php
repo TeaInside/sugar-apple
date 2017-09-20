@@ -8,9 +8,9 @@ require __DIR__."/../../autoload.php";
  */
 
 $fake_webhook = '{
-    "update_id": 44178220,
+    "update_id": 44178274,
     "message": {
-        "message_id": 118,
+        "message_id": 22488,
         "from": {
             "id": 243692601,
             "is_bot": false,
@@ -20,27 +20,37 @@ $fake_webhook = '{
             "language_code": "en-US"
         },
         "chat": {
-            "id": 243692601,
-            "first_name": "Ammar",
-            "last_name": "F",
-            "username": "ammarfaizi2",
-            "type": "private"
+            "id": -100112853117,
+            "title": "Dead Inside",
+            "username": "deadinsidegroup",
+            "type": "supergroup"
         },
-        "date": 1505924203,
-        "sticker": {
-            "width": 512,
-            "height": 512,
-            "emoji": "\u2728",
-            "set_name": "fangirl_line",
-            "thumb": {
-                "file_id": "AAQEABPGgWEZAAQJraGHZ9C3KUB5AAIC",
-                "file_size": 5000,
-                "width": 128,
-                "height": 128
+        "date": 1505926496,
+        "reply_to_message": {
+            "message_id": 22487,
+            "from": {
+                "id": 426180876,
+                "is_bot": true,
+                "first_name": "Dead Inside",
+                "username": "SugarAppleBot"
             },
-            "file_id": "CAADBAADYwIAAkcsHgABRJq1A1dLZ9kC",
-            "file_size": 27112
-        }
+            "chat": {
+                "id": -1001128531173,
+                "title": "Dead Inside",
+                "username": "deadinsidegroup",
+                "type": "supergroup"
+            },
+            "date": 1505926483,
+            "text": "Removing debug.tmp",
+            "entities": [
+                {
+                    "offset": 0,
+                    "length": 18,
+                    "type": "pre"
+                }
+            ]
+        },
+        "text": "!sh echo 3"
     }
 }';
 

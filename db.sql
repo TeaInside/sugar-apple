@@ -12,7 +12,7 @@ CREATE TABLE `a_groups` (
   `group_username` varchar(255) DEFAULT NULL,
   `msg_count` bigint(20) NOT NULL,
   `max_warn` int(11) NOT NULL DEFAULT '3',
-  `welcome_message` text NOT NULL,
+  `welcome_message` text,
   `lang` varchar(10) NOT NULL DEFAULT 'en',
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -156,4 +156,4 @@ CREATE TABLE `user_warn` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2017-09-20 16:36:57
+-- 2017-09-20 17:15:16

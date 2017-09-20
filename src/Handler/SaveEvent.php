@@ -38,6 +38,50 @@ class SaveEvent
 	{
 		if ($this->h->chattype == "private") {
 			$this->private_save();
+		} else {
+			$this->group_save();
+		}
+	}
+
+	private function group_save()
+	{
+		$st = DB::prepare("SELECT `group_name`,`group_username` FROM `a_groups` WHERE `group_id`=:gid LIMIT 1;");
+		pc($st->execute(
+			[
+				":gid"	=> $this->h->chat_id
+			]
+		), $st);
+		if ($st = $st->fetch(PDO::FETCH_ASSOC)) {
+			if (
+				$st['group_name'] 		!= $this->h->chattitle	||
+				$st['group_username']	!= $this->h->chatuname
+			) {
+				$st = DB::prepare("UPDATE `a_groups` SET `group_name`=:gname, `group_username`=:guname, `updated_at`=:up, `msg_count`=`msg_count`+1 WHERE `group_id`=:gid LIMIT 1;");
+				pc($st->execute(
+					[
+						":gname"	=> $this->h->chattitle,
+						":guname"	=> $this->h->chatuname,
+						":up"		=> (date("Y-m-d H:i:s")),
+						":gid"		=> $this->h->chat_id
+					]), $st);
+			} else {
+				$st = DB::prepare("UPDATE `a_groups` SET `updated_at`=:up, `msg_count`=`msg_count`+1 WHERE `group_id`=:gid LIMIT 1;");
+				pc($st->execute(
+					[
+						":up"		=> (date("Y-m-d H:i:s")),
+						":gid"		=> $this->h->chat_id
+					]), $st);
+			}
+		} else {
+			$st = DB::prepare("INSERT INTO `a_groups` (`group_id`,`group_name`,`group_username`,`msg_count`,`max_warn`,`welcome_message`,`lang`,`created_at`) VALUES (:gid, :gname, :guname, 1, 3, null, 'en', :created_at);");
+			pc($st->execute(
+				[
+					":gid"			=> $this->h->chat_id,
+					":gname"		=> $this->h->chattitle,
+					":guname"		=> $this->h->chatuname,
+					":created_at"	=> (date("Y-m-d H:i:s"))
+				]
+			), $st);
 		}
 	}
 
@@ -47,12 +91,11 @@ class SaveEvent
 	private function private_save()
 	{
 		$st  = DB::prepare("SELECT `username`,`name`,`msg_count`,`private`,`lang` FROM `a_users` WHERE `userid`=:userid LIMIT 1;");
-		$exe = $st->execute(
+		pc($st->execute(
 			[
 				":userid" => $this->h->userid
 			]
-		);
-		pc($exe, $st);
+		), $st);
 		if ($st = $st->fetch(PDO::FETCH_ASSOC)) {
 			if (
 				$st['username'] != $this->h->username	||
