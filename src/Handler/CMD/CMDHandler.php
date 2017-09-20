@@ -29,9 +29,8 @@ class CMDHandler
 
 	public function __start($param)
 	{
-		var_dump(123);
 		$this->lang .= "A";
-		B::sendMesssage(
+		B::sendMessage(
 			[
 				"chat_id" 				=> $this->h->chat_id,
 				"text" 	  				=> $this->lang::$a['private_start'],
