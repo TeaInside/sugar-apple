@@ -2,13 +2,14 @@
 
 namespace Handler;
 
-/**
- * @author Ammar Faizi <ammarfaizi2@gmail.com>
- */
-
 use Telegram as B;
 use Handler\Response;
 use Handler\SaveEvent;
+
+/**
+ * @author Ammar Faizi <ammarfaizi2@gmail.com>
+ * @license MIT
+ */
 
 final class MainHandler
 {
@@ -74,7 +75,6 @@ final class MainHandler
 
 
 	/**
-
 	 * @param string $webhook_input
 	 */
 	public function __construct($webhook_input = null)

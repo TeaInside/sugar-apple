@@ -5,6 +5,11 @@ namespace Handler;
 use Handler\Command;
 use Handler\MainHandler;
 
+/**
+ * @author Ammar Faizi <ammarfaizi2@gmail.com>
+ * @license MIT
+ */
+
 final class Response
 {	
 	use Command;

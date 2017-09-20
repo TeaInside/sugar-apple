@@ -4,6 +4,11 @@ namespace Handler;
 
 use Handler\CMD\CMDHandler;
 
+/**
+ * @author Ammar Faizi <ammarfaizi2@gmail.com>
+ * @license MIT
+ */
+
 trait Command
 {
 	private function command()
