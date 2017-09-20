@@ -59,6 +59,7 @@ CREATE TABLE `group_messages` (
   `message_id` bigint(20) NOT NULL,
   `type` enum('text','photo','sticker','video','unknown') NOT NULL DEFAULT 'unknown',
   `reply_to_message_id` bigint(20) NOT NULL,
+  `time` datetime NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`message_uniq`),
   KEY `group_id` (`group_id`),
@@ -156,4 +157,4 @@ CREATE TABLE `user_warn` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2017-09-20 17:15:16
+-- 2017-09-20 22:15:50
