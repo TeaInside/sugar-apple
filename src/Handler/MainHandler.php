@@ -7,6 +7,8 @@ namespace Handler;
  */
 
 use Telegram as B;
+use Handler\Response;
+use Handler\SaveEvent;
 
 final class MainHandler
 {
@@ -109,7 +111,18 @@ final class MainHandler
 
 	private function response()
 	{
-		
+		if ($this->msgtype == "text") {
+			$res = new Response($this);
+			$res->exec();
+		}
+	}
+
+	private function save_event()
+	{
+		if ($this->msgtype == "text") {
+			$se = new SaveEvent($this);
+			$se->exec();
+		}
 	}
 }
 

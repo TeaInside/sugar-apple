@@ -2,31 +2,21 @@
 
 namespace Handler;
 
-use DB;
-use PDO;
 use Handler\MainHandler;
 
-class SaveEvent
+final class Response
 {	
-	/**
-	 * @var array
-	 */
-	private $event = [];
-
 	/**
 	 * @var Handler\MainHandler
 	 */
 	private $h;
-	
-	/**
-	 * @param array $event
-	 */
+
 	public function __construct(MainHandler $handler)
 	{
 		$this->h = $handler;
 	}
 
-	public function save()
+	public function textResponse()
 	{
 		
 	}
