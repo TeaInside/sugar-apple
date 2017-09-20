@@ -10,7 +10,7 @@ require __DIR__."/../../autoload.php";
 $fake_webhook = '{
     "update_id": 44178274,
     "message": {
-        "message_id": 22488,
+        "message_id": 2248,
         "from": {
             "id": 243692601,
             "is_bot": false,
