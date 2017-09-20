@@ -109,12 +109,7 @@ final class MainHandler
 
 	private function response()
 	{
-		if ($this->msgtype == "text") {
-			B::sendMessage([
-				"text" => $this->text,
-				"chat_id" => $this->chat_id
-			]);
-		}
+		
 	}
 }
 
