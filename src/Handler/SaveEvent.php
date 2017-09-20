@@ -6,6 +6,11 @@ use DB;
 use PDO;
 use Handler\MainHandler;
 
+/**
+ * @author Ammar Faizi <ammarfaizi2@gmail.com>
+ * @license MIT
+ */
+
 class SaveEvent
 {	
 	/**
@@ -26,6 +31,9 @@ class SaveEvent
 		$this->h = $handler;
 	}
 
+	/**
+	 *
+	 */
 	public function exec()
 	{
 		if ($this->h->chattype == "private") {
@@ -33,6 +41,9 @@ class SaveEvent
 		}
 	}
 
+	/**
+	 * Save private logs.
+	 */
 	private function private_save()
 	{
 		$st  = DB::prepare("SELECT `username`,`name`,`msg_count`,`private`,`lang` FROM `a_users` WHERE `userid`=:userid LIMIT 1;");
@@ -106,6 +117,7 @@ class SaveEvent
 				break;
 		}
 		pc($st->execute($data), $st);
+		return true;
 	}
 }
 
