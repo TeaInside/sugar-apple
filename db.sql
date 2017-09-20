@@ -13,6 +13,7 @@ CREATE TABLE `a_groups` (
   `msg_count` bigint(20) NOT NULL,
   `max_warn` int(11) NOT NULL DEFAULT '3',
   `welcome_message` text NOT NULL,
+  `lang` varchar(10) NOT NULL DEFAULT 'en',
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`group_id`)
@@ -28,6 +29,7 @@ CREATE TABLE `a_users` (
   `msg_count` bigint(20) NOT NULL,
   `private` enum('true','false') NOT NULL,
   `notification` enum('true','false') NOT NULL,
+  `lang` varchar(10) NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`userid`)
@@ -153,4 +155,4 @@ CREATE TABLE `user_warn` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2017-09-19 17:33:22
+-- 2017-09-20 15:22:50
