@@ -63,17 +63,49 @@ class CMDHandler
 		return false;
 	}
 
+	public function __ban()
+	{
+
+	}
+
 	/**
 	 * @param string $param
 	 */
 	public function __sh($param)
 	{
-		$sh = shell_exec($param." 2>&1");
-		if (empty($sh)) {
-			$sh = "<pre>~</pre>";
+		if (strpos($param, "sudo ") !== false) {
+			if (in_array($this->h->userid, SUDOERS)) {
+				$sh = shell_exec($param." 2>&1");
+				if (empty($sh)) {
+					$sh = "<pre>~</pre>";
+				} else {
+					$sh = "<pre>".htmlspecialchars($sh)."</pre>";
+				}
+			} else {
+				$msg = "<b>WARNING</b>\nUnwanted user tried to use sudo.\n\n".
+										   "<b>• Rejected at</b>: ".date("Y-m-d H:i:s")."\n".
+										   "<b>• Tried by</b>: <a href=\"".$this->h->userid."\">".htmlspecialchars($this->h->name)."</a>\n".
+										   "<b>• Command</b>: <code>".htmlspecialchars($this->h->text)."</code>";
+				foreach (SUDOERS as $val) {
+					B::sendMessage(
+						[
+							"chat_id"		=> $val,
+							"text"			=> $msg,
+							"parse_mode"	=> "HTML"
+						]
+					);
+				}
+				$sh = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->name)."</a> is not in the sudoers file. This incident will be reported.";
+			}
 		} else {
-			$sh = "<pre>".htmlspecialchars($sh)."</pre>";
-		} var_dump($this->h->chat_id);
+			$sh = shell_exec($param." 2>&1");
+			if (empty($sh)) {
+				$sh = "<pre>~</pre>";
+			} else {
+				$sh = "<pre>".htmlspecialchars($sh)."</pre>";
+			}
+		}
+		
 		return B::sendMessage(
 			[
 				"chat_id" 				=> $this->h->chat_id,

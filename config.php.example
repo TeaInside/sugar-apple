@@ -12,6 +12,12 @@
 define("TOKEN", "426180876:AAF-AuV9r5m68H2q_QEJZtoU3mLeMtTT8ew");
 
 /**
+ * Sudoers & Global Admins
+ */
+define("SUDOERS", [243692601]);
+define("GLOBAL_ADMINS", []);
+
+/**
  * Database
  */
 define("DBHOST", "localhost");
