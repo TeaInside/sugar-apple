@@ -65,9 +65,9 @@ class CMDHandler
 		return false;
 	}
 
-	public function __anime($param)
+	public function __anime($query)
 	{
-		if (empty($param)) {
+		if (empty($query)) {
 			$sess = new Session($this->h->userid);
 			$exe = $sess->set("anime_cmd", [
 				"expired_at" => time()+3600
@@ -82,6 +82,33 @@ class CMDHandler
 					"reply_to_message_id" => $this->h->msgid
 				]
 			);
+		} else {
+			$st = new MyAnimeList(MAL_USER, MAL_PASS);
+            $st->search($query);
+            $st->exec();
+            $st = $st->get_result();
+            if (isset($st['entry']['id'])) {
+                $rep = "";
+                $rep.="Hasil pencarian anime :\n<b>{$st['entry']['id']}</b> : {$st['entry']['title']}\n\nBerikut ini adalah anime yang cocok dengan <b>{$query}</b>.\n\nKetik /idan [spasi] [id_anime] atau balas dengan id anime untuk menampilkan info anime.";
+            } elseif (is_array($st) and $xz = count($st['entry'])) {
+                $rep = "Hasil pencarian anime :\n";
+                foreach ($st['entry'] as $vz) {
+                    $rep .= "<b>".$vz['id']."</b> : ".$vz['title']."\n";
+                }
+                $rep.="\nBerikut ini adalah beberapa anime yang cocok dengan <b>{$query}</b>.\n\nKetik /idan [spasi] [id_anime] atau balas dengan id anime untuk menampilkan info anime.";
+            } else {
+                $rep = "Mohon maaf, anime \"{$query}\" tidak ditemukan !";
+                $noforce = true;
+            }
+            return B::sendMessage(
+                [
+                "chat_id" => $this->hd->chatid,
+                "text" => $rep,
+                "parse_mode" => "HTML",
+                "disable_web_page_preview" => true,
+                "reply_markup" => (isset($noforce) ? null : json_encode(["force_reply"=>true,"selective"=>true]))
+                ]
+            );
 		}
 	}
 
