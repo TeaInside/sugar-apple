@@ -82,10 +82,13 @@ class CMDHandler
 							"chat_id" => $this->h->chat_id,
 							"user_id" => $r[0]
 						]
-					)['info']['http_code'] == 200 and B::sendMessage(
+					)['info']['http_code'] == 200 
+
+					and $msg = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> banned <a href=\"tg://user?id=".$r[0]."\">".htmlspecialchars($r[1])."</a>!" or $msg = "Unknown user.";
+					B::sendMessage(
 						[
 							"chat_id" => $this->h->chat_id,
-							"text"	  => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> banned <a href=\"tg://user?id=".$r[0]."\">".htmlspecialchars($r[1])."</a>!",
+							"text"	  => $msg,
 							"parse_mode" => "HTML"
 						]
 					);
