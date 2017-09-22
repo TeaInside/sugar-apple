@@ -82,7 +82,7 @@ class CMDHandler
 							"chat_id" => $this->h->chat_id,
 							"user_id" => $r[0]
 						]
-					)['info']['content'], true) == ["ok" => true, "result" => true]
+					)['content'], true) == ["ok" => true, "result" => true]
 
 					and $msg = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> banned <a href=\"tg://user?id=".$r[0]."\">".htmlspecialchars($r[1])."</a>!" or $msg = $rrr['description'];
 					B::sendMessage(
