@@ -76,13 +76,13 @@ class CMDHandler
 			if ($data) {
 				$st = DB::prepare(rtrim($query, " OR ").";");
 				pc($st->execute($data), $st);
-				while ($r = $st->fetch(PDO::FETCH_NUM)) {
+				while (($r = $st->fetch(PDO::FETCH_NUM)) {
 					if ($rrr = json_decode(B::kickChatMember(
 						[
 							"chat_id" => $this->h->chat_id,
 							"user_id" => $r[0]
 						]
-					)['content'], true) == ["ok" => true, "result" => true]) {
+					)['content'], true)) === ["ok" => true, "result" => true]) {
 						$msg = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> banned <a href=\"tg://user?id=".$r[0]."\">".htmlspecialchars($r[1])."</a>!";
 					} else {
 						$msg = $rrr['description'];
