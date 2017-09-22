@@ -16,7 +16,8 @@ trait Command
 		$cmd_list = [
 			"/start" 		=> ["!start", "~start"],
 			"/sh"			=> ["!sh", "~sh"],
-			"/welcome"		=> ["!welcome", "~welcome"]
+			"/welcome"		=> ["!welcome", "~welcome"],
+			"/ban"			=> ["!ban", "~ban"]
 		];
 		$fs = explode(" ", $this->h->text, 2) xor $param = isset($fs[1]) ? trim($fs[1]) : null;
 		$fs = explode("@", $fs[0]);
@@ -47,6 +48,9 @@ trait Command
 				break;
 			case '/welcome':
 					$cmd->__welcome($param);
+				break;
+			case '/ban':
+					$cmd->__ban($param);
 				break;
 			default:
 				break;

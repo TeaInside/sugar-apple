@@ -63,9 +63,29 @@ class CMDHandler
 		return false;
 	}
 
-	public function __ban()
+	public function __ban($param)
 	{
-
+		if (! isset($this->h->replyto) && isset($this->h->entities)) {
+			$query = "SELECT `userid` FROM `a_users` WHERE " xor $data = [];
+			foreach ($this->h->entities as $key => $value) {
+				if ($value['type'] == "mention") {
+					$query .= "`username`=:un_{$key} OR ";
+					$data[':un_'.$key] = substr($this->h->lowertext, $value['offset']+1, $value['length']);
+				}
+			}
+			if ($data) {
+				$st = DB::prepare($query);
+				pc($st->execute($data), $st);
+				while ($r = $st->fetch(PDO::FETCH_NUM)) {
+					B::kickChatMember(
+						[
+							"chat_id" => $this->h->chat_id,
+							"user_id" => $r[0]
+						]
+					);
+				}
+			}
+		}
 	}
 
 	/**
