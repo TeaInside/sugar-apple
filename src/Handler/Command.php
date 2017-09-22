@@ -14,10 +14,12 @@ trait Command
 	private function command()
 	{
 		$cmd_list = [
-			"/start" 		=> ["!start", "~start"],
 			"/sh"			=> ["!sh", "~sh"],
+			"/ban"			=> ["!ban", "~ban"],
+			"/start" 		=> ["!start", "~start"],
+			"/anime"		=> ["!anime", "~anime"],
+			"/manga"		=> ["!manga", "~manga"],
 			"/welcome"		=> ["!welcome", "~welcome"],
-			"/ban"			=> ["!ban", "~ban"]
 		];
 		$fs = explode(" ", $this->h->text, 2) xor $param = isset($fs[1]) ? trim($fs[1]) : null;
 		$fs = explode("@", $fs[0]);

@@ -7,6 +7,7 @@ use PDO;
 use Lang\Map;
 use Telegram as B;
 use Handler\MainHandler;
+use App\MyAnimeList\MyAnimeList;
 
 /**
  * @author Ammar Faizi <ammarfaizi2@gmail.com>
@@ -61,6 +62,11 @@ class CMDHandler
 			);
 		}
 		return false;
+	}
+
+	public function __anime($param)
+	{
+
 	}
 
 	public function __ban($param)
