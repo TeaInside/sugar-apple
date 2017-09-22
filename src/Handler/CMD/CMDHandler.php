@@ -6,6 +6,7 @@ use DB;
 use PDO;
 use Lang\Map;
 use Telegram as B;
+use Handler\Session;
 use Handler\MainHandler;
 use App\MyAnimeList\MyAnimeList;
 
@@ -66,7 +67,22 @@ class CMDHandler
 
 	public function __anime($param)
 	{
-
+		if (empty($param)) {
+			$sess = new Session($this->h->userid);
+			$exe = $sess->set("anime_cmd", [
+				"expired_at" => time()+3600
+			]);
+			if (!$exe) {
+				die("Gagal menulis session!");
+			}
+			return B::sendMessage(
+				[
+					"chat_id" => $this->h->chat_id,
+					"text"	  => "Anime apa yang ingin kamu cari?",
+					"reply_to_message_id" => $this->h->msgid
+				]
+			);
+		}
 	}
 
 	public function __ban($param)
