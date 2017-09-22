@@ -62,7 +62,7 @@ class SaveEvent
 			$query = "INSERT INTO `groups_admin` (`group_id`,`userid`,`status`,`privileges`,`created_at`,`updated_at`) VALUES ";
 			foreach ($rr['result'] as $val) {
 				$admins[':userid_'.$i] = $val['user']['id'];
-				$admins[':status_'.$i] = $val['user']['status'];
+				$admins[':status_'.$i] = $val['status'];
 				$admins[':created_at_'.$i] = date("Y-m-d");
 				$admins[':updated_at_'.$i] = null;
 				$query = "(:userid_".$i.",:status_".$i.",'OK',:created_at_".$i.",:updated_at_".$i."),";
