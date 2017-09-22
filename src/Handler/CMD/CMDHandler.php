@@ -66,7 +66,7 @@ class CMDHandler
 	public function __ban($param)
 	{
 		if (! isset($this->h->replyto) && isset($this->h->entities)) {
-			$query = "SELECT `userid` FROM `a_users` WHERE " xor $data = [];
+			$query = "SELECT `userid`,`name` FROM `a_users` WHERE " xor $data = [];
 			foreach ($this->h->entities as $key => $value) {
 				if ($value['type'] == "mention") {
 					$query .= "`username`=:un_{$key} OR ";
@@ -81,6 +81,12 @@ class CMDHandler
 						[
 							"chat_id" => $this->h->chat_id,
 							"user_id" => $r[0]
+						]
+					)['info']['http_code'] == 200 and B::sendMessage(
+						[
+							"chat_id" => $this->h->chat_id,
+							"text"	  => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->actorcall)."</a> banned <a href=\"tg://user?id=".$r[0]."\">".htmlspecialchars($r[1])."</a>!",
+							"parse_mode" => "HTML"
 						]
 					);
 				}
