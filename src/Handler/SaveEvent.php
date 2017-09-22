@@ -172,12 +172,22 @@ class SaveEvent
 			 	]
 			 )['content'], true) xor $admins = [':group_id' => $this->h->chat_id] xor $i = 1;
 			$query = "INSERT INTO `groups_admin` (`group_id`,`userid`,`status`,`privileges`,`created_at`,`updated_at`) VALUES ";
+			$st = DB::prepare("INSERT INTO `a_users` (`userid`,`username`,`name`,`photo`,`msg_count`,`private`,`notification`,`lang`,`created_at`) VALUES (:userid, :uname, :name, :photo, 1, 'false', 'false', 'en', :created_at);");
 			foreach ($rr['result'] as $val) {
 				$admins[':userid_'.$i] = $val['user']['id'];
 				$admins[':status_'.$i] = $val['status'];
 				$admins[':created_at_'.$i] = date("Y-m-d H:i:s");
 				$admins[':updated_at_'.$i] = null;
 				$query .= "(:group_id,:userid_".$i.",:status_".$i.",'OK',:created_at_".$i.",:updated_at_".($i++)."),";
+				$st->execute(
+					[
+						":userid"		=> $val['user']['id'],
+						":uname"		=> (isset($val['user']['username']) ? $val['user']['username'] : null),
+						":name"			=> ($val['user']['first_name'].(isset($val['user']['last_name']) ? " ".$val['user']['last_name'] : "")),
+						":photo"		=> null,
+						":created_at"	=> (date("Y-m-d H:i:s"))
+					]
+				);
 			}
 			$st = DB::prepare(rtrim($query, ",").";");
 			pc($st->execute($admins), $st);
