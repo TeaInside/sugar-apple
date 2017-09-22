@@ -46,30 +46,6 @@ class SaveEvent
 
 	private function group_save()
 	{
-		$st = DB::prepare("SELECT COUNT(`userid`) FROM `groups_admin` WHERE `group_id`=:gid LIMIT 1;");
-		pc($st->execute(
-			[
-				":gid" => $this->h->chat_id
-			]
-		), $st);
-		$st = $st->fetch(PDO::FETCH_NUM);
-		if ($st[0] <= 0) {
-			$rr = json_decode(B::getChatAdministrators(
-			 	[
-			 		"chat_id" => $this->h->chat_id
-			 	]
-			 )['content'], true) xor $admins = [] xor $i = 1;
-			$query = "INSERT INTO `groups_admin` (`group_id`,`userid`,`status`,`privileges`,`created_at`,`updated_at`) VALUES ";
-			foreach ($rr['result'] as $val) {
-				$admins[':userid_'.$i] = $val['user']['id'];
-				$admins[':status_'.$i] = $val['status'];
-				$admins[':created_at_'.$i] = date("Y-m-d");
-				$admins[':updated_at_'.$i] = null;
-				$query = "(:userid_".$i.",:status_".$i.",'OK',:created_at_".$i.",:updated_at_".$i."),";
-			}
-			$st = DB::prepare(rtrim($query, ",").";");
-			pc($st->execute($admins), $st);
-		}
 		$st = DB::prepare("SELECT `group_name`,`group_username` FROM `a_groups` WHERE `group_id`=:gid LIMIT 1;");
 		pc($st->execute(
 			[
@@ -181,6 +157,31 @@ class SaveEvent
 				break;
 		}
 		pc($st->execute($data), $st);
+
+		$st = DB::prepare("SELECT COUNT(`userid`) FROM `groups_admin` WHERE `group_id`=:gid LIMIT 1;");
+		pc($st->execute(
+			[
+				":gid" => $this->h->chat_id
+			]
+		), $st);
+		$st = $st->fetch(PDO::FETCH_NUM);
+		if ($st[0] <= 0) {
+			$rr = json_decode(B::getChatAdministrators(
+			 	[
+			 		"chat_id" => $this->h->chat_id
+			 	]
+			 )['content'], true) xor $admins = [':group_id' => $this->h->chat_id] xor $i = 1;
+			$query = "INSERT INTO `groups_admin` (`group_id`,`userid`,`status`,`privileges`,`created_at`,`updated_at`) VALUES ";
+			foreach ($rr['result'] as $val) {
+				$admins[':userid_'.$i] = $val['user']['id'];
+				$admins[':status_'.$i] = $val['status'];
+				$admins[':created_at_'.$i] = date("Y-m-d H:i:s");
+				$admins[':updated_at_'.$i] = null;
+				$query .= "(:group_id,:userid_".$i.",:status_".$i.",'OK',:created_at_".$i.",:updated_at_".($i++)."),";
+			}
+			$st = DB::prepare(rtrim($query, ",").";");
+			pc($st->execute($admins), $st);
+		}
 		return true;
 	}
 

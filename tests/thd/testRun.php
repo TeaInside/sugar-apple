@@ -8,9 +8,9 @@ require __DIR__."/../../autoload.php";
  */
 
 $fake_webhook = '{
-    "update_id": 44178334,
+    "update_id": 44178399,
     "message": {
-        "message_id": 184,
+        "message_id": 22775,
         "from": {
             "id": 243692601,
             "is_bot": false,
@@ -20,14 +20,12 @@ $fake_webhook = '{
             "language_code": "en-US"
         },
         "chat": {
-            "id": 243692601,
-            "first_name": "Ammar",
-            "last_name": "F",
-            "username": "ammarfaizi2",
-            "type": "private"
+            "id": -1001128531173,
+            "title": "Dead Inside",
+            "type": "supergroup"
         },
-        "date": 1505952994,
-        "text": "!sh sudo echo 123"
+        "date": 1506090116,
+        "text": "~sh echo test"
     }
 }';
 
