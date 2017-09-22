@@ -74,7 +74,7 @@ class CMDHandler
 				}
 			}
 			if ($data) {
-				$st = DB::prepare($query);
+				$st = DB::prepare(rtrim($query, " OR ").";");
 				pc($st->execute($data), $st);
 				while ($r = $st->fetch(PDO::FETCH_NUM)) {
 					B::kickChatMember(
