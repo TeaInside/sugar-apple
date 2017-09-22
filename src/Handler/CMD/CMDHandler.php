@@ -65,6 +65,67 @@ class CMDHandler
 		return false;
 	}
 
+	public function __idma($id)
+	{
+		if (empty($query)) {
+			$sess = new Session($this->h->userid);
+			$exe = $sess->set("idmanga_cmd", [
+				"expired_at" => time()+3600
+			]);
+			if (!$exe) {
+				die("Gagal menulis session!");
+			}
+			return B::sendMessage(
+				[
+					"chat_id" => $this->h->chat_id,
+					"text"	  => "Sebutkan ID manga!",
+					"reply_to_message_id" => $this->h->msgid
+				]
+			);
+		} else {
+			$fx = function ($str) {
+                if (is_array($str)) {
+                    return trim(str_replace(array("[i]", "[/i]","<br />"), array("<i>", "</i>","\n"), html_entity_decode(implode($str))));
+                }
+                return trim(str_replace(array("[i]", "[/i]","<br />"), array("<i>", "</i>","\n"), html_entity_decode($str, ENT_QUOTES, 'UTF-8')));
+            };
+            $st = new MyAnimeList(MAL_USER, MAL_PASS);
+            $st = $st->get_info($id, "manga");
+            $st = isset($st['entry']) ? $st['entry'] : $st;
+            if (is_array($st) and count($st)) {
+                $img = $st['image'];
+                unset($st['image']);
+                $rep = "";
+                foreach ($st as $key => $value) {
+                    $ve = $fx($value);
+                    !empty($ve) and $rep .= "<b>".ucwords($key)."</b> : ".($ve)."\n";
+                }
+                isset($img) and B::sendPhoto(
+                    [
+                    "chat_id" => $this->hd->chatid,
+                    "photo" => $img,
+                    "reply_to_message_id" => $this->hd->msgid
+                    ]
+                );
+                return B::sendMessage(
+                    [
+                    "chat_id" => $this->hd->chatid,
+                    "text" => $rep,
+                    "reply_to_message_id" => $this->hd->msgid,
+                    "parse_mode" => "HTML"
+                    ]
+                );
+            } else {
+                B::sendMessage(
+                    [
+                        "text" => "Mohon maaf, manga \"{$id}\" tidak ditemukan !",
+                        "chat_id" => $this->hd->chatid
+                    ]
+                );
+            }
+        }
+	}
+
 	public function __manga($query)
 	{
 		if (empty($query)) {
@@ -78,7 +139,7 @@ class CMDHandler
 			return B::sendMessage(
 				[
 					"chat_id" => $this->h->chat_id,
-					"text"	  => "Anime apa yang ingin kamu cari?",
+					"text"	  => "Manga apa yang ingin kamu cari?",
 					"reply_to_message_id" => $this->h->msgid
 				]
 			);
