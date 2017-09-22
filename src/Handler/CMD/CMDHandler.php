@@ -65,6 +65,52 @@ class CMDHandler
 		return false;
 	}
 
+	public function __manga($query)
+	{
+		if (empty($query)) {
+			$sess = new Session($this->h->userid);
+			$exe = $sess->set("manga_cmd", [
+				"expired_at" => time()+3600
+			]);
+			if (!$exe) {
+				die("Gagal menulis session!");
+			}
+			return B::sendMessage(
+				[
+					"chat_id" => $this->h->chat_id,
+					"text"	  => "Anime apa yang ingin kamu cari?",
+					"reply_to_message_id" => $this->h->msgid
+				]
+			);
+		} else {
+			$st = new MyAnimeList(MAL_USER, MAL_PASS);
+            $st->search($query, "manga");
+            $st->exec();
+            $st = $st->get_result();
+            if (isset($st['entry']['id'])) {
+                $rep = "";
+                $rep.="Hasil pencarian manga :\n<b>{$st['entry']['id']}</b> : {$st['entry']['title']}\n\nBerikut ini adalah manga yang cocok dengan <b>{$query}</b>.\n\nKetik /idma [spasi] [id_anime] atau balas dengan id manga untuk menampilkan info manga lebih lengkap.";
+            } elseif (is_array($st) and $xz = count($st['entry'])) {
+                $rep = "Hasil pencarian manga :\n";
+                foreach ($st['entry'] as $vz) {
+                    $rep .= "<b>".$vz['id']."</b> : ".$vz['title']."\n";
+                }
+                $rep.="\nBerikut ini adalah beberapa manga yang cocok dengan <b>{$query}</b>.\n\nKetik /idma [spasi] [id_manga] atau balas dengan id manga untuk menampilkan info manga lebih lengkap.";
+            } else {
+                $rep = "Mohon maaf, anime \"{$query}\" tidak ditemukan !";
+            }
+            return B::sendMessage(
+                [
+                    "chat_id" => $this->hd->chatid,
+                    "text" => $rep,
+                    "parse_mode" => "HTML",
+                    "disable_web_page_preview" => true,
+                    "reply_markup" => (isset($noforce) ? null : json_encode(["force_reply"=>true,"selective"=>true]))
+                ]
+            );
+		}
+	}
+
 	public function __anime($query)
 	{
 		if (empty($query)) {
