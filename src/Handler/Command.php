@@ -54,6 +54,12 @@ trait Command
 			case '/ban':
 					$cmd->__ban($param);
 				break;
+			case '/anime':
+					$cmd->__anime($param);
+				break;
+			case '/manga':
+					$cmd->__manga($param);
+				break;
 			default:
 				break;
 		}
