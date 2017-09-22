@@ -102,11 +102,11 @@ class CMDHandler
             }
             return B::sendMessage(
                 [
-                "chat_id" => $this->hd->chatid,
-                "text" => $rep,
-                "parse_mode" => "HTML",
-                "disable_web_page_preview" => true,
-                "reply_markup" => (isset($noforce) ? null : json_encode(["force_reply"=>true,"selective"=>true]))
+	                "chat_id" => $this->hd->chatid,
+	                "text" => $rep,
+	                "parse_mode" => "HTML",
+	                "disable_web_page_preview" => true,
+	                "reply_markup" => (isset($noforce) ? null : json_encode(["force_reply"=>true,"selective"=>true]))
                 ]
             );
 		}
