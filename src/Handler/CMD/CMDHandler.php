@@ -123,7 +123,7 @@ class CMDHandler
 				B::sendMessage(
 					[
 						"chat_id" => $this->h->chat_id,
-						"text"    => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> banned <a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['first_name'])."</a>!",
+						"text"    => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> banned <a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a>!",
 						"parse_mode" => "HTML"
 					]
 				) or B::sendMessage(
