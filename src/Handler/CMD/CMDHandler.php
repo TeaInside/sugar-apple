@@ -65,37 +65,83 @@ class CMDHandler
 
 	public function __ban($param)
 	{
-		if (! isset($this->h->replyto) && isset($this->h->entities)) {
-			$query = "SELECT `userid`,`name` FROM `a_users` WHERE " xor $data = [];
-			foreach ($this->h->entities as $key => $value) {
-				if ($value['type'] == "mention") {
-					$query .= "`username`=:un_{$key} OR ";
-					$data[':un_'.$key] = substr($this->h->lowertext, $value['offset']+1, $value['length']);
-				}
+		if (in_array($this->h->userid, SUDOERS)) {
+			$flag = true;
+		} else {
+			$st = DB::prepare("SELECT `status` FROM `groups_admin` WHERE `userid`=:uid AND `group_id`=:gid LIMIT 1;");
+			pc($st->execute(
+				[
+					":userid" => $this->h->userid,
+					":gid"	  => $this->h->chat_id
+				]
+			), $st);
+			if ($st = $st->fetch(PDO::FETCH_NUM)) {
+				$flag = true;
+			} else {
+				$flag = false;
 			}
-			if ($data) {
-				$st = DB::prepare(rtrim($query, " OR ").";");
-				pc($st->execute($data), $st);
-				while ($r = $st->fetch(PDO::FETCH_NUM)) {
-					if (($rrr = json_decode(B::kickChatMember(
-						[
-							"chat_id" => $this->h->chat_id,
-							"user_id" => $r[0]
-						]
-					)['content'], true)) === ["ok" => true, "result" => true]) {
-						$msg = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> banned <a href=\"tg://user?id=".$r[0]."\">".htmlspecialchars($r[1])."</a>!";
-					} else {
-						$msg = $rrr['description'];
+		}
+		if ($flag) {
+			if (! isset($this->h->replyto) && isset($this->h->entities)) {
+				$query = "SELECT `userid`,`name` FROM `a_users` WHERE " xor $data = [];
+				foreach ($this->h->entities as $key => $value) {
+					if ($value['type'] == "mention") {
+						$query .= "`username`=:un_{$key} OR ";
+						$data[':un_'.$key] = substr($this->h->lowertext, $value['offset']+1, $value['length']);
 					}
-					B::sendMessage(
-						[
-							"chat_id" => $this->h->chat_id,
-							"text"	  => $msg,
-							"parse_mode" => "HTML"
-						]
-					);
 				}
+				if ($data) {
+					$st = DB::prepare(rtrim($query, " OR ").";");
+					pc($st->execute($data), $st);
+					while ($r = $st->fetch(PDO::FETCH_NUM)) {
+						if (($rrr = json_decode(B::kickChatMember(
+							[
+								"chat_id" => $this->h->chat_id,
+								"user_id" => $r[0]
+							]
+						)['content'], true)) === ["ok" => true, "result" => true]) {
+							$msg = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> banned <a href=\"tg://user?id=".$r[0]."\">".htmlspecialchars($r[1])."</a>!";
+						} else {
+							$msg = $rrr['description'];
+						}
+						B::sendMessage(
+							[
+								"chat_id" => $this->h->chat_id,
+								"text"	  => $msg,
+								"parse_mode" => "HTML"
+							]
+						);
+					}
+				}
+			} else {
+				($rrr = json_decode(B::kickChatMember(
+							[
+								"chat_id" => $this->replyto['from']['id'],
+								"user_id" => $r[0]
+							]
+						)['content'], true)) === ["ok" => true, "result" => true] and 
+				B::sendMessage(
+					[
+						"chat_id" => $this->h->chat_id,
+						"text"    => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> banned <a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['first_name'])."</a>!",
+						"parse_mode" => "HTML"
+					]
+				) or B::sendMessage(
+					[
+						"text" => $rrr['description'],
+						"chat_id" => $this->h->chat_id
+					]
+				);
+
 			}
+		} else {
+			B::sendMessage(
+				[
+					"chat_id" => $this->h->chat_id,
+					"text"	  => "You're not allowed to use this command!",
+					"reply_to_message_id" => $this->h->msgid
+				]
+			);
 		}
 	}
 
