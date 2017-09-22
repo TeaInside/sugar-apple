@@ -46,6 +46,16 @@ class SaveEvent
 
 	private function group_save()
 	{
+		$st = DB::prepare("SELECT COUNT(`userid`) FROM `groups_admin` WHERE `group_id`=:gid LIMIT 1;");
+		pc($st->execute(
+			[
+				":gid" => $this->h->chat_id
+			]
+		), $st);
+		$st = $st->fetch(PDO::FETCH_NUM);
+		if ($st[0] <= 0) {
+			
+		}
 		$st = DB::prepare("SELECT `group_name`,`group_username` FROM `a_groups` WHERE `group_id`=:gid LIMIT 1;");
 		pc($st->execute(
 			[
