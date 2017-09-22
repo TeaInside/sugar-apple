@@ -87,6 +87,7 @@ class CMDHandler
 					} else {
 						$msg = $rrr['description'];
 					}
+					var_dump($msg, $rrr);
 					B::sendMessage(
 						[
 							"chat_id" => $this->h->chat_id,
