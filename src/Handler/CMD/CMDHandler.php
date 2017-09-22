@@ -116,7 +116,7 @@ class CMDHandler
 			} else {
 				($rrr = json_decode(B::kickChatMember(
 							[
-								"chat_id" => $this->replyto['from']['id'],
+								"chat_id" => $this->h->replyto['from']['id'],
 								"user_id" => $r[0]
 							]
 						)['content'], true)) === ["ok" => true, "result" => true] and 
