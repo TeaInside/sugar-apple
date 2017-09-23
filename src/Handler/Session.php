@@ -4,7 +4,9 @@ namespace Handler;
 
 defined("PRIVATE_STORAGE") or die("PRIVATE_STORAGE not defined!\n");
 
-final class Session
+use Contracts\AutomaticStorageManagement;
+
+final class Session implements AutomaticStorageManagement
 {
 	/**
 	 * @var string
