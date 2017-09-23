@@ -67,7 +67,24 @@ class CMDHandler
 
 	public function __idan($id)
     {
-        if (!empty($id)) {
+    	if (empty($id)) {
+    		$sess = new Session($this->h->userid);
+			$exe = $sess->set("cmd_session", [
+				"cmd"		 => "/idan",
+				"chat_id"	 => $this->h->chat_id,
+				"expired_at" => time()+300
+			]);
+			if (!$exe) {
+				die("Gagal menulis session!");
+			}
+			return B::sendMessage(
+				[
+					"chat_id" => $this->h->chat_id,
+					"text"	  => "Sebutkan ID anime!",
+					"reply_to_message_id" => $this->h->msgid
+				]
+			);
+        } else {
             $fx = function ($str) {
                 if (is_array($str)) {
                     return trim(str_replace(array("[i]", "[/i]","<br />"), array("<i>", "</i>","\n"), html_entity_decode(implode($str))));
@@ -102,15 +119,6 @@ class CMDHandler
                     "text" => $rep,
                     "reply_to_message_id" => $this->h->msgid,
                     "parse_mode" => "HTML"
-                ]
-            );
-        } else {
-            return B::sendMessage(
-                [
-                    "chat_id" => $this->h->chat_id,
-                    "text" => "Sebutkan ID Anime yang ingin kamu cari !",
-                    "reply_markup" => json_encode(["force_reply"=>true,"selective"=>true]),
-                    "reply_to_message_id" => $this->h->msgid
                 ]
             );
         }
@@ -174,6 +182,8 @@ class CMDHandler
                     ]
                 );
             }
+        } else {
+
         }
 	}
 

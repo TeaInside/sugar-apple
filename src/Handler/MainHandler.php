@@ -122,30 +122,30 @@ final class MainHandler
 
 	private function parseSession()
 	{
-		$sess = new Session($this->userid);
-		if ($r = $sess->get("cmd_session")) {
-			if (
-				isset($r['chat_id']) && 
-				$r['chat_id'] === $this->chat_id
-			) {
-				$cmd = new CMDHandler($this);
-				switch ($r['cmd']) {
-					case '/anime':
-						$cmd->__anime($this->lowertext);
-						$sess->destroy();
-						$sess = new Session($this->userid);
-						$sess->set("cmd_session", [
-							"cmd"		 => "/idan",
-							"chat_id"	 => $this->chat_id,
-							"expired_at" => time()+300
-						]);
-						break;
-					case '/idan':
-						$cmd->__idan($this->lowertext);
-						$sess->destroy();
-						break;
-					default:
-						break;
+		if (Session::session_exists($this->userid)) {
+			$sess = new Session($this->userid);
+			if ($r = $sess->get("cmd_session")) {
+				if (
+					isset($r['chat_id']) && 
+					$r['chat_id'] === $this->chat_id
+				) {
+					$cmd = new CMDHandler($this);
+					switch ($r['cmd']) {
+						case '/anime':
+							$cmd->__anime($this->lowertext);
+							$sess->set("cmd_session", [
+								"cmd"		 => "/idan",
+								"chat_id"	 => $this->chat_id,
+								"expired_at" => time()+300
+							]);
+							break;
+						case '/idan':
+							$cmd->__idan($this->lowertext);
+							$sess->destroy();
+							break;
+						default:
+							break;
+					}
 				}
 			}
 		}

@@ -38,6 +38,11 @@ final class Session implements AutomaticStorageManagement
 		$this->__init();
 	}
 
+	public static function session_exists($sessid)
+	{
+		return file_exists(PRIVATE_STORAGE."/session/".$sessid.".json");
+	}
+
 	/**
 	 * Init file and property.
 	 */
