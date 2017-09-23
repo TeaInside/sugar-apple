@@ -127,7 +127,8 @@ final class MainHandler
 			if ($r = $sess->get("cmd_session")) {
 				if (
 					isset($r['chat_id']) && 
-					$r['chat_id'] === $this->chat_id
+					$r['chat_id'] === $this->chat_id && 
+					$r['expired_at'] >= time()
 				) {
 					$cmd = new CMDHandler($this);
 					switch ($r['cmd']) {
