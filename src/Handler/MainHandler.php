@@ -123,11 +123,12 @@ final class MainHandler
 	private function parseSession()
 	{
 		$sess = new Session($this->userid);
-		if ($sess = $sess->get("cmd_session")) {
+		if ($r = $sess->get("cmd_session")) {
 			$cmd = new CMDHandler($this);
-			switch ($sess['cmd']) {
+			switch ($r['cmd']) {
 				case '/anime':
 					$cmd->__anime($this->lowertext);
+					$sess->destroy();
 					break;
 				
 				default:
