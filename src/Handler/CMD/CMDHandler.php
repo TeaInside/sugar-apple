@@ -286,7 +286,7 @@ class CMDHandler
 
 	public function __ban($param)
 	{
-		if (in_array($this->h->userid, SUDOERS)) {
+		if (in_array($this->h->userid, SUDOERS) or in_array($this->h->userid, GLOBAL_ADMIN)) {
 			$flag = true;
 		} else {
 			$st = DB::prepare("SELECT `status` FROM `groups_admin` WHERE `userid`=:uid AND `group_id`=:gid LIMIT 1;");

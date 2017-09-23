@@ -31,8 +31,19 @@ define("DBNAME", "pgice");
 define("PUBLIC_DIR", __DIR__."/public");
 define("BASEPATH", __DIR__);
 define("LOG_DIR", __DIR__."/logs");
+define("data", PUBLIC_DIR."/data");
+define("PRIVATE_STORAGE", __DIR__."/storage");
+define("PUBLIC_STORAGE", PUBLIC_DIR."/storage");
 
 /**
  * Virtual
  */
 define("PHPVIRTUAL_DIR", PUBLIC_DIR."/virtual/php");
+define("PHPVIRTUAL_URL", "https://webhooks.redangel.ga/virtual/php");
+
+
+/**
+ * MyAnimeList
+ */
+define("MAL_USER", "ammarfaizi2");
+define("MAL_PASS", "triosemut123");
