@@ -140,7 +140,7 @@ final class MainHandler
 							"expired_at" => time()+300
 						]);
 						break;
-					case '/idan'
+					case '/idan':
 						$cmd->__anime($this->lowertext);
 						$sess->destroy();
 						break;
