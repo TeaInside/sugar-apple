@@ -27,7 +27,7 @@ final class Session
 	public function __construct($sessid)
 	{
 		$this->sessid   = sha1($sessid);
-		$this->sessfile = PRIVATE_STORAGE."/session/".$this->sessid.".json";
+		$this->sessfile = PRIVATE_STORAGE."/session/".$sessid.".json";
 		$this->__init();
 	}
 
