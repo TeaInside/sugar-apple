@@ -133,8 +133,17 @@ final class MainHandler
 					case '/anime':
 						$cmd->__anime($this->lowertext);
 						$sess->destroy();
+						$sess = new Session($this->userid);
+						$sess->set("cmd_session", [
+							"cmd"		 => "/idan",
+							"chat_id"	 => $this->h->chat_id,
+							"expired_at" => time()+300
+						]);
 						break;
-					
+					case '/idan'
+						$cmd->__anime($this->lowertext);
+						$sess->destroy();
+						break;
 					default:
 						break;
 				}
