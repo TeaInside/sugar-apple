@@ -469,6 +469,7 @@ class CMDHandler
 					), $st);
 				return true;
 			} else {
+				var_dump($st, $sq);
 				B::sendMessage(
 					[
 							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>1/".$sq[0]."</code>)",
@@ -481,11 +482,11 @@ class CMDHandler
 					[
 						":group_id" => $this->h->chat_id,
 						":userid"   => $this->h->userid,
-						":reason"	=> json_encode([
+						":reason"	=> json_encode([[
 											"reason" 	=> $param,
 											"warned_by"	=> $this->h->userid,
 											"date"		=> time()
-										]),
+										]]),
 						":created_at" => date("Y-m-d H:i:s")
 					]
 				), $st);
