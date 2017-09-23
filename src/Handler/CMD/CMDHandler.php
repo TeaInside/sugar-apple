@@ -380,10 +380,7 @@ class CMDHandler
 					$sh = "<pre>".htmlspecialchars($sh)."</pre>";
 				}
 			} else {
-				$msg = "<b>WARNING</b>\nUnwanted user tried to use sudo.\n\n".
-										   "<b>• Rejected at</b>: ".date("Y-m-d H:i:s")."\n".
-										   "<b>• Tried by</b>: <a href=\"".$this->h->userid."\">".htmlspecialchars($this->h->name)."</a>\n".
-										   "<b>• Command</b>: <code>".htmlspecialchars($this->h->text)."</code>";
+				$msg = "<b>WARNING</b>\nUnwanted user tried to use sudo.\n\n<b>• Rejected at</b>: ".date("Y-m-d H:i:s")."\n<b>• Tried by</b>: <a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->name)."</a> (<code>".($this->h->userid)."</code>)\n<b>• Command</b>: <code>".htmlspecialchars($this->h->text)."</code>";
 				foreach (SUDOERS as $val) {
 					B::sendMessage(
 						[
