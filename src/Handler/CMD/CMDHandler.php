@@ -102,14 +102,14 @@ class CMDHandler
                 }
                 isset($img) and B::sendPhoto(
                     [
-                    "chat_id" => $this->h->chatid,
+                    "chat_id" => $this->h->chat_id,
                     "photo" => $img,
                     "reply_to_message_id" => $this->h->msgid
                     ]
                 );
                 return B::sendMessage(
                     [
-                    "chat_id" => $this->h->chatid,
+                    "chat_id" => $this->h->chat_id,
                     "text" => $rep,
                     "reply_to_message_id" => $this->h->msgid,
                     "parse_mode" => "HTML"
@@ -119,7 +119,7 @@ class CMDHandler
                 B::sendMessage(
                     [
                         "text" => "Mohon maaf, manga \"{$id}\" tidak ditemukan !",
-                        "chat_id" => $this->h->chatid
+                        "chat_id" => $this->h->chat_id
                     ]
                 );
             }
@@ -162,7 +162,7 @@ class CMDHandler
             }
             return B::sendMessage(
                 [
-                    "chat_id" => $this->h->chatid,
+                    "chat_id" => $this->h->chat_id,
                     "text" => $rep,
                     "parse_mode" => "HTML",
                     "disable_web_page_preview" => true,
@@ -211,7 +211,7 @@ class CMDHandler
             }
             return B::sendMessage(
                 [
-	                "chat_id" => $this->h->chatid,
+	                "chat_id" => $this->h->chat_id,
 	                "text" => $rep,
 	                "parse_mode" => "HTML",
 	                "disable_web_page_preview" => true,
