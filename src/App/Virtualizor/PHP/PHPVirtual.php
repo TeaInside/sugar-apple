@@ -46,6 +46,12 @@ class PHPVirtual implements VirtualizorContract
 	public function exec()
 	{
 		$ch = new Curl(PHPVIRTUAL_URL."/".$this->hash.".php");
-		return $ch->exec();
+		$r1 = [
+			"<br />", "<br>", PHPVIRTUAL_DIR."/".$this->hash.".php"
+		];
+		$r2 = [
+			"\n", "\n", "/tmp/php_virtual/".substr($this->hash, 0, 5).".php"
+		];
+		return str_replace($r1, $r2, $ch->exec());
 	}
 }
