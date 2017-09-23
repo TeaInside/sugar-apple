@@ -133,15 +133,19 @@ final class MainHandler
 					switch ($r['cmd']) {
 						case '/anime':
 							$cmd->__anime($this->lowertext);
+							$sess->destroy();
 							break;
 						case '/manga':
 							$cmd->__manga($this->lowertext);
+							$sess->destroy();
 							break;
 						case '/idan':
 							$cmd->__idan($this->lowertext);
+							$sess->destroy();
 							break;
 						case '/idma':
 							$cmd->__idma($this->lowertext);
+							$sess->destroy();
 							break;
 						default:
 							break;
