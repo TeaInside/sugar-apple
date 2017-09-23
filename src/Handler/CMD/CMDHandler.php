@@ -184,8 +184,6 @@ class CMDHandler
                     ]
                 );
             }
-        } else {
-
         }
 	}
 
