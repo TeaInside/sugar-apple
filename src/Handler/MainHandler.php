@@ -136,7 +136,7 @@ final class MainHandler
 						$sess = new Session($this->userid);
 						$sess->set("cmd_session", [
 							"cmd"		 => "/idan",
-							"chat_id"	 => $this->h->chat_id,
+							"chat_id"	 => $this->chat_id,
 							"expired_at" => time()+300
 						]);
 						break;
