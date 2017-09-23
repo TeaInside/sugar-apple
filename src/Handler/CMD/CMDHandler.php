@@ -177,6 +177,7 @@ class CMDHandler
 		if (empty($query)) {
 			$sess = new Session($this->h->userid);
 			$exe = $sess->set("anime_cmd", [
+				"group_id"	 => $this->h->chat_id,
 				"expired_at" => time()+3600
 			]);
 			if (!$exe) {
