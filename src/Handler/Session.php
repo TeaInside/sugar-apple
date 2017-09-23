@@ -22,6 +22,11 @@ final class Session
 	private $sessdata = [];
 
 	/**
+	 * @var bool
+	 */
+	private $destroyed = false;
+
+	/**
 	 * @param string $sessid
 	 */
 	public function __construct($sessid)
@@ -72,12 +77,15 @@ final class Session
 
 	public function __destruct()
 	{
-		file_put_contents($this->sessfile, json_encode($this->sessdata), LOCK_EX);
+		if (! $this->destroyed) {
+			file_put_contents($this->sessfile, json_encode($this->sessdata), LOCK_EX);
+		}
 	}
 
 	public function destroy()
 	{
 		$this->sessdata = [];
+		$this->destroyed = true;
 		return unlink($this->sessfile);
 	}
 }
