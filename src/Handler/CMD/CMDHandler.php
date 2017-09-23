@@ -424,7 +424,7 @@ class CMDHandler
 			$st = DB::prepare("SELECT `a_groups`.`max_warn`, `user_warn`.`warn_count`, `user_warn`.`reason` FROM `user_warn` INNER JOIN `a_groups` ON `a_groups`.`group_id`=`user_warn`.`group_id` WHERE `a_groups`.`group_id`=:group_id AND `user_warn`.`userid`=:userid LIMIT 1;");
 			pc($st->execute(
 				[
-					":userid" => $this->replyto['from']['id'],
+					":userid" => $this->h->replyto['from']['id'],
 					":group_id" => $this->h->chat_id
 				]
 			), $st);
