@@ -426,6 +426,10 @@ class CMDHandler
 			pc($sq->execute([":group_id" => $this->h->chat_id]), $sq);
 			$sq = $sq->fetch(PDO::FETCH_NUM);
 			$st = DB::prepare("SELECT `warn_count`,`reason` FROM `user_warn` WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
+			var_dump([
+					":userid" => $this->h->replyto['from']['id'],
+					":group_id" => $this->h->chat_id
+				]);
 			pc($st->execute(
 				[
 					":userid" => $this->h->replyto['from']['id'],
