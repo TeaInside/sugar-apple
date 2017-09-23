@@ -81,8 +81,7 @@ class CMDHandler
 				[
 					"chat_id" => $this->h->chat_id,
 					"text"	  => "Sebutkan ID anime!",
-					"reply_to_message_id" => $this->h->msgid,
-					"reply_markup" => json_encode(["force_reply"=>true,"selective"=>true])
+					"reply_to_message_id" => $this->h->msgid
 				]
 			);
         } else {
@@ -141,8 +140,7 @@ class CMDHandler
 				[
 					"chat_id" => $this->h->chat_id,
 					"text"	  => "Sebutkan ID anime!",
-					"reply_to_message_id" => $this->h->msgid,
-					"reply_markup" => json_encode(["force_reply"=>true,"selective"=>true])
+					"reply_to_message_id" => $this->h->msgid
 				]
 			);
 		} else {
