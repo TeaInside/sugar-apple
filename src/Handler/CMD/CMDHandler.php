@@ -380,7 +380,13 @@ class CMDHandler
 					$sh = "<pre>".htmlspecialchars($sh)."</pre>";
 				}
 			} else {
-				$msg = "<b>WARNING</b>\nUnwanted user tried to use sudo.\n\n<b>• Rejected at</b>: ".date("Y-m-d H:i:s")."\n<b>• Tried by</b>: <a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->name)."</a> (<code>".($this->h->userid)."</code>)\n<b>• Command</b>: <code>".htmlspecialchars($this->h->text)."</code>";
+				if ($this->h->chattype == "private") {
+					$chatroom = "Private chat";
+				} else {
+					$group = isset($this->h->chatuname) ? "<a href=\"https://t.me/".$this->h->chatuname."/".$this->h->msgid."\">".htmlspecialchars($this->h->chattitle)."</a>" : "<code>".htmlspecialchars($this->h->chattitle)."</code>";
+					$chatroom = "Group (".$group.")";
+				}
+				$msg = "<b>WARNING</b>\nUnwanted user tried to use sudo.\n\n<b>• Rejected at</b>: ".date("Y-m-d H:i:s")."\n<b>• Tried by</b>: <a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->name)."</a> (<code>".($this->h->userid)."</code>)\n<b>• Chat Room</b>: ".$chatroom."\n<b>• Command</b>: <code>".htmlspecialchars($this->h->text)."</code>";
 				foreach (SUDOERS as $val) {
 					B::sendMessage(
 						[

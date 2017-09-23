@@ -7,6 +7,7 @@ use Handler\Session;
 use Handler\Response;
 use Handler\SaveEvent;
 use Handler\CMD\CMDHandler;
+use Handler\VirtualizorHandler;
 
 /**
  * @author Ammar Faizi <ammarfaizi2@gmail.com>
@@ -122,7 +123,10 @@ final class MainHandler
 		$this->parseEvent();
 		$this->parseSession();
 		if (! $this->session_action) {
-			$this->response();
+			$vir = new VirtualizorHandler($this);
+			if (! $vir->exec()) {
+				$this->response();
+			}
 		}
 		$this->save_event();
 	}
