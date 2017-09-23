@@ -426,10 +426,6 @@ class CMDHandler
 			pc($sq->execute([":group_id" => $this->h->chat_id]), $sq);
 			$sq = $sq->fetch(PDO::FETCH_NUM);
 			$st = DB::prepare("SELECT `warn_count`,`reason` FROM `user_warn` WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
-			var_dump([
-					":userid" => $this->h->replyto['from']['id'],
-					":group_id" => $this->h->chat_id
-				]);
 			pc($st->execute(
 				[
 					":userid" => $this->h->replyto['from']['id'],
@@ -472,7 +468,7 @@ class CMDHandler
 						[
 							":res" => $st[1],
 							":updated_at" => date("Y-m-d H:i:s"),
-							":userid" => $this->h->userid,
+							":userid" => $this->h->replyto['from']['id'],
 							":group_id" => $this->h->chat_id
 						]
 					), $stq);
@@ -488,7 +484,7 @@ class CMDHandler
 				pc($st->execute(
 					[
 						":group_id" => $this->h->chat_id,
-						":userid" => $this->h->userid,
+						":userid" => $this->h->replyto['from']['id'],
 						":res" => json_encode([ [
 									"reason" => $param,
 									"warned_by" => $this->h->userid,
