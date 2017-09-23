@@ -443,13 +443,13 @@ class CMDHandler
 								]
 							)['content'], true)) != ["ok" => true, "result" => true]) and $err = $rrr['description'] or $err = "";
 					$msg = [
-							"text" => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> <b>banned</b>: reached the max number of warnings (<code>".($r[2]+1)."/".$r[1]."</code>)",
+							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> <b>banned</b>: reached the max number of warnings (<code>".($r[2]+1)."/".$r[1]."</code>)",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
 						];
 				} else {
 					$msg = [
-							"text" => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> has been warned (<code>".($r[2]+1)."/".$r[1]."</code>)",
+							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>".($r[2]+1)."/".$r[1]."</code>)",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
 					];
@@ -471,7 +471,7 @@ class CMDHandler
 				$r = $st->fetch(PDO::FETCH_NUM);
 				B::sendMessage(
 					[
-							"text" => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> has been warned (<code>1/".$r[0]."</code>)",
+							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>1/".$r[0]."</code>)",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
 					]
@@ -479,7 +479,7 @@ class CMDHandler
 				$st = DB::prepare("INSERT INTO `user_warn` (`group_id`,`userid`,`reason`,`warn_count`,`created_at`,`updated_at`) VALUES (:group_id,:userid,:reason,1,:created_at,null);");
 				pc($st->execute(
 					[
-						":group_id" => $this->h->group_id,
+						":group_id" => $this->h->chat_id,
 						":userid"   => $this->h->userid,
 						":reason"	=> json_encode([
 											"reason" 	=> $param,
