@@ -22,6 +22,7 @@ trait Command
 			"/manga"		=> ["!manga", "~manga"],
 			"/idan"			=> ["!idan", "~idan"],
 			"/idma"			=> ["!idma", "~idma"],
+			"/warn"			=> ["!warn", "~warn"],
 			"/welcome"		=> ["!welcome", "~welcome"]
 		];
 		$fs = explode(" ", $this->h->text, 2) xor $param = isset($fs[1]) ? trim($fs[1]) : null;
@@ -51,9 +52,6 @@ trait Command
 			case '/sh':
 					return $cmd->__sh($param);
 				break;
-			case '/welcome':
-					return $cmd->__welcome($param);
-				break;
 			case '/ban':
 					return $cmd->__ban($param);
 				break;
@@ -68,6 +66,11 @@ trait Command
 				break;
 			case '/idma':
 					return $cmd->__idma($param);
+				break;
+			case '/warn':
+					return $cmd->__warn($param);
+			case '/welcome':
+					return $cmd->__welcome($param);
 				break;
 			default:
 				break;
