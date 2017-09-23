@@ -127,7 +127,7 @@ final class MainHandler
 			$cmd = new CMDHandler($this);
 			switch ($sess['cmd']) {
 				case '/anime':
-					$cmd->__anime();
+					$cmd->__anime($this->lowertext);
 					break;
 				
 				default:
