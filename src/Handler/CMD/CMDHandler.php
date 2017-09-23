@@ -421,20 +421,23 @@ class CMDHandler
 	public function __warn($param)
 	{
 		if (isset($this->h->replyto)) {
-			$st = DB::prepare("SELECT `a_groups`.`max_warn`, `user_warn`.`warn_count`, `user_warn`.`reason` FROM `user_warn` INNER JOIN `a_groups` ON `a_groups`.`group_id`=`user_warn`.`group_id` WHERE `user_warn`.`group_id`=:group_id AND `user_warn`.`userid`=:userid LIMIT 1;");
+			$sq = DB::prepare("SELECT `max_warn` FROM `a_groups` WHERE `group_id`=:group_id LIMIT 1;");
+			pc($sq->execute([":group_id" => $this->h->chat_id]), $st);
+			$sq = $sq->fetch(PDO::FETCH_NUM);
+			$st = DB::prepare("SELECT `warn_count`,`reason` FROM `user_warn` WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
 			pc($st->execute(
 				[
 					":userid" => $this->h->replyto['from']['id'],
 					":group_id" => $this->h->chat_id
 				]
 			), $st);
-			if ($r = $st->fetch(PDO::FETCH_NUM)) {
-				$r[2]   = json_decode($r[2], true);
-				$r[2][] = [
+			if ($st = $st->fetch(PDO::FETCH_NUM)) {
+				$st[2]   = json_decode($st[2], true);
+				$st[2][] = [
 					"reason" 	=> $param,
 					"warned_by"	=> $this->h->userid,
 					"date"		=> time()
-				] xor $r[2] = json_encode($r[2]);
+				] xor $st[2] = json_encode($st[2]);
 				if ($st[1] >= $st[0]) {
 					(($rrr = json_decode(B::kickChatMember(
 								[
@@ -443,13 +446,13 @@ class CMDHandler
 								]
 							)['content'], true)) != ["ok" => true, "result" => true]) and $err = $rrr['description'] or $err = "";
 					$msg = [
-							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> <b>banned</b>: reached the max number of warnings (<code>".($r[2]+1)."/".$r[1]."</code>)",
+							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> <b>banned</b>: reached the max number of warnings (<code>".($st[2]+1)."/".$st[1]."</code>)",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
 						];
 				} else {
 					$msg = [
-							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>".($r[2]+1)."/".$r[1]."</code>)",
+							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>".($st[2]+1)."/".$st[1]."</code>)",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
 					];
@@ -458,7 +461,7 @@ class CMDHandler
 				$st = DB::prepare("UPDATE `user_warn` SET `warn_count`=`warn_count`+1,`reason`=:res,`updated_at`=:up WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
 					pc($st->execute(
 						[
-							":res" => $r[2],
+							":res" => $st[2],
 							":up" => date("Y-m-d H:i:s"),
 							":userid" => $this->replyto['from']['id'],
 							":group_id" => $this->h->chat_id
@@ -468,10 +471,10 @@ class CMDHandler
 			} else {
 				$st = DB::prepare("SELECT `max_warn` FROM `a_groups` WHERE `group_id`=:group_id LIMIT 1;");
 				pc($st->execute([":group_id" => $this->h->chat_id]), $st);
-				$r = $st->fetch(PDO::FETCH_NUM);
+				$st = $st->fetch(PDO::FETCH_NUM);
 				B::sendMessage(
 					[
-							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>1/".$r[0]."</code>)",
+							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>1/".$st[0]."</code>)",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
 					]
