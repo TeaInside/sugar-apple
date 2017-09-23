@@ -128,8 +128,10 @@ class CMDHandler
 	{
 		if (empty($query)) {
 			$sess = new Session($this->h->userid);
-			$exe = $sess->set("idmanga_cmd", [
-				"expired_at" => time()+3600
+			$exe = $sess->set("cmd_session", [
+				"cmd"		 => "/idma",
+				"chat_id"	 => $this->h->chat_id,
+				"expired_at" => time()+300
 			]);
 			if (!$exe) {
 				die("Gagal menulis session!");
@@ -137,7 +139,7 @@ class CMDHandler
 			return B::sendMessage(
 				[
 					"chat_id" => $this->h->chat_id,
-					"text"	  => "Sebutkan ID manga!",
+					"text"	  => "Sebutkan ID anime!",
 					"reply_to_message_id" => $this->h->msgid
 				]
 			);

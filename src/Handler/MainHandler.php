@@ -133,15 +133,15 @@ final class MainHandler
 					switch ($r['cmd']) {
 						case '/anime':
 							$cmd->__anime($this->lowertext);
-							$sess->set("cmd_session", [
-								"cmd"		 => "/idan",
-								"chat_id"	 => $this->chat_id,
-								"expired_at" => time()+300
-							]);
+							break;
+						case '/manga':
+							$cmd->__manga($this->lowertext);
 							break;
 						case '/idan':
 							$cmd->__idan($this->lowertext);
-							$sess->destroy();
+							break;
+						case '/idma':
+							$cmd->__idma($this->lowertext);
 							break;
 						default:
 							break;
