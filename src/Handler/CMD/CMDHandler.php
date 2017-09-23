@@ -492,7 +492,7 @@ class CMDHandler
 								]]),
 						":created_at" => date("Y-m-d H:i:s")
 					]
-				));
+				), $st);
 			}
 		}
 	}
