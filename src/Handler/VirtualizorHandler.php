@@ -45,6 +45,7 @@ final class VirtualizorHandler
 					[
 						"chat_id" 			  => $this->h->chat_id,
 						"text" 	  			  => $app,
+						"reply_to_message_id" => $this->h->msgid,
 						"parse_mode"		  => "HTML"
 					]
 				);
