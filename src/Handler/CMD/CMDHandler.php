@@ -469,12 +469,9 @@ class CMDHandler
 					), $st);
 				return true;
 			} else {
-				$st = DB::prepare("SELECT `max_warn` FROM `a_groups` WHERE `group_id`=:group_id LIMIT 1;");
-				pc($st->execute([":group_id" => $this->h->chat_id]), $st);
-				$st = $st->fetch(PDO::FETCH_NUM);
 				B::sendMessage(
 					[
-							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>1/".$st[0]."</code>)",
+							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>1/".$sq[0]."</code>)",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
 					]
