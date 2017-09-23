@@ -37,8 +37,8 @@ final class VirtualizorHandler
 		$t = $this->h->lowertext;
 
 		if (substr($t, 0, 5) == "<?php") {
-			if (PHP::is_secure($this->text)) {
-				$app = new PHPVirtual($this->text);
+			if (PHP::is_secure($this->h->text)) {
+				$app = new PHPVirtual($this->h->text);
 				$app = $app->exec();
 				empty($app) and $app = "~";
 				B::sendMessage(
