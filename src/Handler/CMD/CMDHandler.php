@@ -418,6 +418,81 @@ class CMDHandler
 		);
 	}
 
+	public function __warn($param)
+	{
+		if (isset($this->replyto)) {
+			$st = DB::prepare("SELECT `a_groups`.`max_warn`, `user_warn`.`warn_count`, `user_warn`.`reason` FROM `user_warn` INNER JOIN `a_groups` ON `a_groups`.`group_id`=`user_warn`.`group_id` WHERE `a_groups`.`group_id`=:group_id AND `user_warn`.`userid`=:userid LIMIT 1;");
+			pc($st->execute(
+				[
+					":userid" => $this->replyto['from']['id'],
+					":group_id" => $this->h->chat_id
+				]
+			), $st);
+			if ($r = $st->fetch(PDO::FETCH_NUM)) {
+				$r[2]   = json_decode($r[2], true);
+				$r[2][] = [
+					"reason" 	=> $param,
+					"warned_by"	=> $this->h->userid,
+					"date"		=> time()
+				] xor $r[2] = json_encode($r[2]);
+				if ($st[1] >= $st[0]) {
+					(($rrr = json_decode(B::kickChatMember(
+								[
+									"chat_id" => $this->h->chat_id,
+									"user_id" => $this->h->replyto['from']['id']
+								]
+							)['content'], true)) != ["ok" => true, "result" => true]) and $err = $rrr['description'] or $err = "";
+					$msg = [
+							"text" => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> <b>banned</b>: reached the max number of warnings (<code>".($r[2]+1)."/".$r[1]."</code>)",
+							"chat_id" => $this->h->chat_id,
+							"parse_mode" => "HTML"
+						];
+				} else {
+					$msg = [
+							"text" => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> has been warned (<code>".($r[2]+1)."/".$r[1]."</code>)",
+							"chat_id" => $this->h->chat_id,
+							"parse_mode" => "HTML"
+					];
+				}
+				B::sendMessage($msg);
+				$st = DB::prepare("UPDATE `user_warn` SET `warn_count`=`warn_count`+1,`reason`=:res,`updated_at`=:up WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
+					pc($st->execute(
+						[
+							":res" => $r[2],
+							":up" => date("Y-m-d H:i:s"),
+							":userid" => $this->replyto['from']['id'],
+							":group_id" => $this->h->chat_id
+						]
+					), $st);
+				return true;
+			} else {
+				$st = DB::prepare("SELECT `max_warn` FROM `a_groups` WHERE `group_id`=:group_id LIMIT 1;");
+				pc($st->execute([":group_id" => $this->h->chat_id]), $st);
+				$r = $st->fetch(PDO::FETCH_NUM);
+				B::sendMessage(
+					[
+							"text" => "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->first_name)."</a> has been warned (<code>1/".$r[0]."</code>)",
+							"chat_id" => $this->h->chat_id,
+							"parse_mode" => "HTML"
+					]
+				);
+				$st = DB::prepare("INSERT INTO `user_warn` (`group_id`,`userid`,`reason`,`warn_count`,`created_at`,`updated_at`) VALUES (:group_id,:userid,:reason,1,:created_at,null);");
+				pc($st->execute(
+					[
+						":group_id" => $this->h->group_id,
+						":userid"   => $this->h->userid,
+						":reason"	=> json_encode([
+											"reason" 	=> $param,
+											"warned_by"	=> $this->h->userid,
+											"date"		=> time()
+										]),
+						":created_at" => date("Y-m-d H:i:s")
+					]
+				), $st);
+			}
+		}
+	}
+
 	public function __welcome($param)
 	{
 		$this->lang .= "A";
