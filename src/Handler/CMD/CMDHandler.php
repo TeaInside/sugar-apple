@@ -81,7 +81,8 @@ class CMDHandler
 				[
 					"chat_id" => $this->h->chat_id,
 					"text"	  => "Sebutkan ID anime!",
-					"reply_to_message_id" => $this->h->msgid
+					"reply_to_message_id" => $this->h->msgid,
+					"reply_markup" => json_encode(["force_reply"=>true,"selective"=>true])
 				]
 			);
         } else {
@@ -140,7 +141,8 @@ class CMDHandler
 				[
 					"chat_id" => $this->h->chat_id,
 					"text"	  => "Sebutkan ID anime!",
-					"reply_to_message_id" => $this->h->msgid
+					"reply_to_message_id" => $this->h->msgid,
+					"reply_markup" => json_encode(["force_reply"=>true,"selective"=>true])
 				]
 			);
 		} else {
@@ -227,8 +229,7 @@ class CMDHandler
                     "chat_id" => $this->h->chat_id,
                     "text" => $rep,
                     "parse_mode" => "HTML",
-                    "disable_web_page_preview" => true,
-                    "reply_markup" => (isset($noforce) ? null : json_encode(["force_reply"=>true,"selective"=>true]))
+                    "disable_web_page_preview" => true
                 ]
             );
 		}
@@ -277,8 +278,7 @@ class CMDHandler
 	                "chat_id" => $this->h->chat_id,
 	                "text" => $rep,
 	                "parse_mode" => "HTML",
-	                "disable_web_page_preview" => true,
-	                "reply_markup" => (isset($noforce) ? null : json_encode(["force_reply"=>true,"selective"=>true]))
+	                "disable_web_page_preview" => true
                 ]
             );
 		}
