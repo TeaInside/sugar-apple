@@ -463,7 +463,7 @@ class CMDHandler
 						]
 					);
 				}
-				$stq = DB::prepare("UPDATE `warn_count` SET `warn_count`=`warn_count`+1,`reason`=:res,`updated_at`=:updated_at WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
+				$stq = DB::prepare("UPDATE `user_warn` SET `warn_count`=`warn_count`+1,`reason`=:res,`updated_at`=:updated_at WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
 					pc($stq->execute(
 						[
 							":res" => $st[1],
