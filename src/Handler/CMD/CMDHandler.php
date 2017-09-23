@@ -448,7 +448,7 @@ class CMDHandler
 					)['content']) != '{"ok":true,"result":true}') and $err = "Error : <code>\n".htmlspecialchars(json_decode($rr, true)['description'])."</code>" or $err = "";
 					B::sendMessage(
 						[
-							"text" => $nl." banned: reached the max number of warnings (".($st[0])."/".$sq[0].")",
+							"text" => $nl." <b>banned</b>: reached the max number of warnings (<code>".($st[0])."/".$sq[0]."</code>)",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
 						]
@@ -457,7 +457,7 @@ class CMDHandler
 				} else {
 					B::sendMessage(
 						[
-							"text" => $nl." has been warned (".($st[0])."/".$sq[0].")",
+							"text" => $nl." has been warned (<code>".($st[0])."/".$sq[0]."</code>)",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
 						]
@@ -475,7 +475,7 @@ class CMDHandler
 			} else {
 				B::sendMessage(
 						[
-							"text" => $nl." has been warned (1/".$sq[0].")",
+							"text" => $nl." has been warned (<code>1/".$sq[0]."</code>)",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
 						]
