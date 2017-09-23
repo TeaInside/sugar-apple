@@ -43,22 +43,22 @@ trait Command
 		$cmd = new CMDHandler($this->h);
 		switch ($key) {
 			case '/start':
-					$cmd->__start($param);
+					return $cmd->__start($param);
 				break;
 			case '/sh':
-					$cmd->__sh($param);
+					return $cmd->__sh($param);
 				break;
 			case '/welcome':
-					$cmd->__welcome($param);
+					return $cmd->__welcome($param);
 				break;
 			case '/ban':
-					$cmd->__ban($param);
+					return $cmd->__ban($param);
 				break;
 			case '/anime':
-					$cmd->__anime($param);
+					return $cmd->__anime($param);
 				break;
 			case '/manga':
-					$cmd->__manga($param);
+					return $cmd->__manga($param);
 				break;
 			default:
 				break;

@@ -102,16 +102,16 @@ class CMDHandler
                 }
                 isset($img) and B::sendPhoto(
                     [
-                    "chat_id" => $this->hd->chatid,
+                    "chat_id" => $this->h->chatid,
                     "photo" => $img,
-                    "reply_to_message_id" => $this->hd->msgid
+                    "reply_to_message_id" => $this->h->msgid
                     ]
                 );
                 return B::sendMessage(
                     [
-                    "chat_id" => $this->hd->chatid,
+                    "chat_id" => $this->h->chatid,
                     "text" => $rep,
-                    "reply_to_message_id" => $this->hd->msgid,
+                    "reply_to_message_id" => $this->h->msgid,
                     "parse_mode" => "HTML"
                     ]
                 );
@@ -119,7 +119,7 @@ class CMDHandler
                 B::sendMessage(
                     [
                         "text" => "Mohon maaf, manga \"{$id}\" tidak ditemukan !",
-                        "chat_id" => $this->hd->chatid
+                        "chat_id" => $this->h->chatid
                     ]
                 );
             }
@@ -162,7 +162,7 @@ class CMDHandler
             }
             return B::sendMessage(
                 [
-                    "chat_id" => $this->hd->chatid,
+                    "chat_id" => $this->h->chatid,
                     "text" => $rep,
                     "parse_mode" => "HTML",
                     "disable_web_page_preview" => true,
@@ -176,7 +176,8 @@ class CMDHandler
 	{
 		if (empty($query)) {
 			$sess = new Session($this->h->userid);
-			$exe = $sess->set("anime_cmd", [
+			$exe = $sess->set("cmd_session", [
+				"cmd"		 => "/anime",
 				"group_id"	 => $this->h->chat_id,
 				"expired_at" => time()+3600
 			]);
@@ -210,7 +211,7 @@ class CMDHandler
             }
             return B::sendMessage(
                 [
-	                "chat_id" => $this->hd->chatid,
+	                "chat_id" => $this->h->chatid,
 	                "text" => $rep,
 	                "parse_mode" => "HTML",
 	                "disable_web_page_preview" => true,

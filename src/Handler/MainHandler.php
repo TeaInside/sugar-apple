@@ -3,8 +3,10 @@
 namespace Handler;
 
 use Telegram as B;
+use Handler\Session;
 use Handler\Response;
 use Handler\SaveEvent;
+use Handler\CMD\CMDHandler;
 
 /**
  * @author Ammar Faizi <ammarfaizi2@gmail.com>
@@ -113,8 +115,26 @@ final class MainHandler
 	public function run()
 	{
 		$this->parseEvent();
+		$this->parseSession();
 		$this->response();
 		$this->save_event();
+	}
+
+	private function parseSession()
+	{
+		$sess = new Session($this->userid);
+		if ($sess = $sess->get("cmd_session")) {
+			$cmd = new CMDHandler($this);
+			switch ($sess['cmd']) {
+				case '/anime':
+					$cmd->__anime();
+					break;
+				
+				default:
+					# code...
+					break;
+			}
+		}
 	}
 
 	private function parseEvent()
