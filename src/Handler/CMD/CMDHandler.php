@@ -421,6 +421,7 @@ class CMDHandler
 	public function __warn($param)
 	{
 		if (isset($this->h->replyto)) {
+			$param = !empty($param) ? $param : null;
 			$sq = DB::prepare("SELECT `max_warn` FROM `a_groups` WHERE `group_id`=:group_id LIMIT 1;");
 			pc($sq->execute([":group_id" => $this->h->chat_id]), $sq);
 			$sq = $sq->fetch(PDO::FETCH_NUM);
@@ -430,66 +431,68 @@ class CMDHandler
 					":userid" => $this->h->replyto['from']['id'],
 					":group_id" => $this->h->chat_id
 				]
-			), $st);
-			if ($st = $st->fetch(PDO::FETCH_NUM)) {
-				$st[2]   = json_decode($st[2], true);
-				$st[2][] = [
-					"reason" 	=> $param,
-					"warned_by"	=> $this->h->userid,
-					"date"		=> time()
-				] xor $st[2] = json_encode($st[2]);
-				if ($st[1] >= $st[0]) {
-					(($rrr = json_decode(B::kickChatMember(
-								[
-									"chat_id" => $this->h->chat_id,
-									"user_id" => $this->h->replyto['from']['id']
-								]
-							)['content'], true)) != ["ok" => true, "result" => true]) and $err = $rrr['description'] or $err = "";
-					$msg = [
-							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> <b>banned</b>: reached the max number of warnings (<code>".($st[2]+1)."/".$st[1]."</code>)",
+			), $st) xor $nl = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a>";
+			if ($st = $st->fetch(PDO::FETCH_ASSOC)) {
+				$st[1] = json_decode($st[1], true);
+				$st[1][] = [
+					"reason" => $param,
+					"warned_by" => $this->h->userid,
+					"date"	=> date("Y-m-d H:i:s")
+				] xor $st[1] = json_encode($st[1]);
+				if (($st[0] = $st[0]+1) >= $sq[0]) {
+					(($rr = B::kickChatMember(
+						[
+							"chat_id" => $this->h->chat_id,
+							"user_id" => $this->h->replyto['from']['id']
+						]
+					)['content']) != '{"ok":true,"result":true}') and $err = "Error : <code>\n".htmlspecialchars(json_decode($rr, true)['description'])."</code>" or $err = "";
+					B::sendMessage(
+						[
+							"text" => $nl." banned: reached the max number of warnings (".($st[0])."/".$sq[0].")",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
-						];
+						]
+					);
+					
 				} else {
-					$msg = [
-							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>".($st[2]+1)."/".$st[1]."</code>)",
+					B::sendMessage(
+						[
+							"text" => $nl." has been warned (".($st[0])."/".$sq[0].")",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
-					];
+						]
+					);
 				}
-				B::sendMessage($msg);
-				$st = DB::prepare("UPDATE `user_warn` SET `warn_count`=`warn_count`+1,`reason`=:res,`updated_at`=:up WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
+				$st = DB::prepare("UPDATE `warn_count` SET `warn_count`=`warn_count`+1,`reason`=:res,`updated_at`=:updated_at WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
 					pc($st->execute(
 						[
-							":res" => $st[2],
-							":up" => date("Y-m-d H:i:s"),
-							":userid" => $this->replyto['from']['id'],
+							":res" => $st[1],
+							":updated_at" => date("Y-m-d H:i:s"),
+							":userid" => $this->h->userid,
 							":group_id" => $this->h->chat_id
 						]
 					), $st);
-				return true;
 			} else {
-				var_dump($st, $sq);
 				B::sendMessage(
-					[
-							"text" => "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been warned (<code>1/".$sq[0]."</code>)",
+						[
+							"text" => $nl." has been warned (1/".$sq[0].")",
 							"chat_id" => $this->h->chat_id,
 							"parse_mode" => "HTML"
-					]
-				);
-				$st = DB::prepare("INSERT INTO `user_warn` (`group_id`,`userid`,`reason`,`warn_count`,`created_at`,`updated_at`) VALUES (:group_id,:userid,:reason,1,:created_at,null);");
+						]
+					);
+				$st = DB::prepare("INSERT INTO `user_warn` (`group_id`, `userid`, `reason`, `warn_count`, `created_at`, `updated_at`) VALUES (:group_id, :userid, :res, 1, :created_at, NULL);");
 				pc($st->execute(
 					[
 						":group_id" => $this->h->chat_id,
-						":userid"   => $this->h->userid,
-						":reason"	=> json_encode([[
-											"reason" 	=> $param,
-											"warned_by"	=> $this->h->userid,
-											"date"		=> time()
-										]]),
+						":userid" => $this->h->userid,
+						":res" => json_encode([ [
+									"reason" => $param,
+									"warned_by" => $this->h->userid,
+									"date"	=> date("Y-m-d H:i:s")
+								]]),
 						":created_at" => date("Y-m-d H:i:s")
 					]
-				), $st);
+				));
 			}
 		}
 	}
