@@ -124,16 +124,20 @@ final class MainHandler
 	{
 		$sess = new Session($this->userid);
 		if ($r = $sess->get("cmd_session")) {
-			$cmd = new CMDHandler($this);
-			switch ($r['cmd']) {
-				case '/anime':
-					$cmd->__anime($this->lowertext);
-					$sess->destroy();
-					break;
-				
-				default:
-					# code...
-					break;
+			if (
+				isset($r['chat_id']) && 
+				$r['chat_id'] === $this->chat_id
+			) {
+				$cmd = new CMDHandler($this);
+				switch ($r['cmd']) {
+					case '/anime':
+						$cmd->__anime($this->lowertext);
+						$sess->destroy();
+						break;
+					
+					default:
+						break;
+				}
 			}
 		}
 	}

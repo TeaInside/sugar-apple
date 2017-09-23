@@ -178,8 +178,8 @@ class CMDHandler
 			$sess = new Session($this->h->userid);
 			$exe = $sess->set("cmd_session", [
 				"cmd"		 => "/anime",
-				"group_id"	 => $this->h->chat_id,
-				"expired_at" => time()+3600
+				"chat_id"	 => $this->h->chat_id,
+				"expired_at" => time()+300
 			]);
 			if (!$exe) {
 				die("Gagal menulis session!");
