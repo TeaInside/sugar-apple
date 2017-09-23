@@ -14,8 +14,9 @@ trait Command
 	private function command()
 	{
 		$cmd_list = [
-			"/sh"			=> ["!sh", "~sh"],
-			"/ban"			=> ["!ban", "~ban"],
+			"/sh"			=> ["!sh", "~sh", "/shexec", "!shexec", "~shexec", "shexec"],
+			"/me"			=> ["!me", "~me"],
+			"/ban"			=> ["!ban", "~ban", "/banned", "!banned", "~banned"],
 			"/start" 		=> ["!start", "~start"],
 			"/anime"		=> ["!anime", "~anime"],
 			"/manga"		=> ["!manga", "~manga"],
