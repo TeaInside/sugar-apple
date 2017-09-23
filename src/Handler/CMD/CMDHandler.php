@@ -81,7 +81,8 @@ class CMDHandler
 				[
 					"chat_id" => $this->h->chat_id,
 					"text"	  => "Sebutkan ID anime!",
-					"reply_to_message_id" => $this->h->msgid
+					"reply_to_message_id" => $this->h->msgid,
+					"reply_markup" => json_encode(["force_reply"=>true,"selective"=>true])
 				]
 			);
         } else {
@@ -140,7 +141,8 @@ class CMDHandler
 				[
 					"chat_id" => $this->h->chat_id,
 					"text"	  => "Sebutkan ID anime!",
-					"reply_to_message_id" => $this->h->msgid
+					"reply_to_message_id" => $this->h->msgid,
+					"reply_markup" => json_encode(["force_reply"=>true,"selective"=>true])
 				]
 			);
 		} else {
@@ -201,7 +203,8 @@ class CMDHandler
 				[
 					"chat_id" => $this->h->chat_id,
 					"text"	  => "Manga apa yang ingin kamu cari?",
-					"reply_to_message_id" => $this->h->msgid
+					"reply_to_message_id" => $this->h->msgid,
+					"reply_markup" => json_encode(["force_reply"=>true,"selective"=>true])
 				]
 			);
 		} else {
@@ -217,7 +220,7 @@ class CMDHandler
                 foreach ($st['entry'] as $vz) {
                     $rep .= "<b>".$vz['id']."</b> : ".$vz['title']."\n";
                 }
-                $rep.="\nBerikut ini adalah beberapa manga yang cocok dengan <b>{$query}</b>.\n\nKetik /idma [spasi] [id_manga] atau balas dengan id manga untuk menampilkan info manga lebih lengkap.";
+                $rep.="\nBerikut ini adalah beberapa manga yang cocok dengan <b>{$query}</b>.\n\nKetik /idma [spasi] [id_manga] untuk info lebih lengkap.";
             } else {
                 $rep = "Mohon maaf, anime \"{$query}\" tidak ditemukan !";
             }
@@ -249,7 +252,8 @@ class CMDHandler
 				[
 					"chat_id" => $this->h->chat_id,
 					"text"	  => "Anime apa yang ingin kamu cari?",
-					"reply_to_message_id" => $this->h->msgid
+					"reply_to_message_id" => $this->h->msgid,
+					"reply_markup" => json_encode(["force_reply"=>true,"selective"=>true])
 				]
 			);
 		} else {
@@ -265,7 +269,7 @@ class CMDHandler
                 foreach ($st['entry'] as $vz) {
                     $rep .= "<b>".$vz['id']."</b> : ".$vz['title']."\n";
                 }
-                $rep.="\nBerikut ini adalah beberapa anime yang cocok dengan <b>{$query}</b>.\n\nKetik /idan [spasi] [id_anime] atau balas dengan id anime untuk menampilkan info anime.";
+                $rep.="\nBerikut ini adalah beberapa anime yang cocok dengan <b>{$query}</b>.\n\nKetik /idan [spasi] [id_anime] untuk menampilkan info lebih lengkap.";
             } else {
                 $rep = "Mohon maaf, anime \"{$query}\" tidak ditemukan !";
                 $noforce = true;
