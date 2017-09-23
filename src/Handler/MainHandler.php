@@ -101,6 +101,11 @@ final class MainHandler
 	public $entities;
 
 	/**
+	 * @var bool
+	 */
+	private $session_action = false;
+
+	/**
 	 * @param string $webhook_input
 	 */
 	public function __construct($webhook_input = null)
@@ -116,7 +121,9 @@ final class MainHandler
 	{
 		$this->parseEvent();
 		$this->parseSession();
-		$this->response();
+		if (! $this->session_action) {
+			$this->response();
+		}
 		$this->save_event();
 	}
 
@@ -151,6 +158,7 @@ final class MainHandler
 						default:
 							break;
 					}
+					$this->session_action = true;
 				} else {
 					$sess->destroy();
 				}
