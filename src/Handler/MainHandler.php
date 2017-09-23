@@ -141,7 +141,7 @@ final class MainHandler
 						]);
 						break;
 					case '/idan':
-						$cmd->__anime($this->lowertext);
+						$cmd->__idan($this->lowertext);
 						$sess->destroy();
 						break;
 					default:
