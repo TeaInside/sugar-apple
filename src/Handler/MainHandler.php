@@ -151,6 +151,8 @@ final class MainHandler
 						default:
 							break;
 					}
+				} else {
+					$sess->destroy();
 				}
 			}
 		}
