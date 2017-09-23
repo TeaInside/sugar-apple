@@ -392,7 +392,8 @@ class CMDHandler
 						[
 							"chat_id"		=> $val,
 							"text"			=> $msg,
-							"parse_mode"	=> "HTML"
+							"parse_mode"	=> "HTML",
+							"disable_web_page_preview" => true
 						]
 					);
 				}
