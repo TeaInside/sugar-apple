@@ -432,7 +432,7 @@ class CMDHandler
 					":group_id" => $this->h->chat_id
 				]
 			), $st) xor $nl = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a>";
-			if ($st = $st->fetch(PDO::FETCH_ASSOC)) {
+			if ($st = $st->fetch(PDO::FETCH_NUM)) {
 				$st[1] = json_decode($st[1], true);
 				$st[1][] = [
 					"reason" => $param,
@@ -463,15 +463,15 @@ class CMDHandler
 						]
 					);
 				}
-				$st = DB::prepare("UPDATE `warn_count` SET `warn_count`=`warn_count`+1,`reason`=:res,`updated_at`=:updated_at WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
-					pc($st->execute(
+				$stq = DB::prepare("UPDATE `warn_count` SET `warn_count`=`warn_count`+1,`reason`=:res,`updated_at`=:updated_at WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
+					pc($stq->execute(
 						[
 							":res" => $st[1],
 							":updated_at" => date("Y-m-d H:i:s"),
 							":userid" => $this->h->userid,
 							":group_id" => $this->h->chat_id
 						]
-					), $st);
+					), $stq);
 			} else {
 				B::sendMessage(
 						[
