@@ -420,7 +420,7 @@ class CMDHandler
 
 	public function __warn($param)
 	{
-		if (isset($this->replyto)) {
+		if (isset($this->h->replyto)) {
 			$st = DB::prepare("SELECT `a_groups`.`max_warn`, `user_warn`.`warn_count`, `user_warn`.`reason` FROM `user_warn` INNER JOIN `a_groups` ON `a_groups`.`group_id`=`user_warn`.`group_id` WHERE `a_groups`.`group_id`=:group_id AND `user_warn`.`userid`=:userid LIMIT 1;");
 			pc($st->execute(
 				[
