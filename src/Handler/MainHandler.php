@@ -234,7 +234,7 @@ final class MainHandler
 
     private function response()
     {
-        if ($msgtype === "text" && isset($this->replyto['text'])) {
+        if ($this->msgtype === "text" && isset($this->replyto['text'])) {
             if (substr($this->text, 0, 3) == "/s/") {
                 $a = explode("/", $this->text);
                 $r = "<b>Did you mean:</b>\n\"".preg_replace($a[1], $a[2], $this->replyto['text'])."\".";
