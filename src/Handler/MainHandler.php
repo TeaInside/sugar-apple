@@ -238,7 +238,7 @@ final class MainHandler
             if (substr($this->text, 0, 3) == "/s/") {
                 $a = explode("/", $this->text);
                 if (isset($a[2], $a[3])) {
-                    $r = "<b>Did you mean:</b>\n\"".str_replace($a[2], $a[3], $this->replyto['text'])."\".";
+                    $r = "<b>Did you mean:</b>\n\"".preg_replace("#".$a[2]."#", $a[3], $this->replyto['text'])."\".";
                     if ($r) {
                         return B::sendMessage(
                             [
