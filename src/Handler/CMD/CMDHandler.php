@@ -338,11 +338,11 @@ final class CMDHandler implements CommandList
                 }
             } else {
                 ($rrr = json_decode(B::kickChatMember(
-                            [
+                    [
                                 "chat_id" => $this->h->chat_id,
                                 "user_id" => $this->h->replyto['from']['id']
                             ]
-                        )['content'], true)) === ["ok" => true, "result" => true] and
+                )['content'], true)) === ["ok" => true, "result" => true] and
                 B::sendMessage(
                     [
                         "chat_id" => $this->h->chat_id,
@@ -465,21 +465,21 @@ final class CMDHandler implements CommandList
                 }
                 $stq = DB::prepare("UPDATE `user_warn` SET `warn_count`=`warn_count`+1,`reason`=:res,`updated_at`=:updated_at WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
                 pc($stq->execute(
-                        [
+                    [
                             ":res" => $st[1],
                             ":updated_at" => date("Y-m-d H:i:s"),
                             ":userid" => $this->h->replyto['from']['id'],
                             ":group_id" => $this->h->chat_id
                         ]
-                    ), $stq);
+                ), $stq);
             } else {
                 B::sendMessage(
-                        [
+                    [
                             "text" => $nl." has been warned (<code>1/".$sq[0]."</code>)",
                             "chat_id" => $this->h->chat_id,
                             "parse_mode" => "HTML"
                         ]
-                    );
+                );
                 $st = DB::prepare("INSERT INTO `user_warn` (`group_id`, `userid`, `reason`, `warn_count`, `created_at`, `updated_at`) VALUES (:group_id, :userid, :res, 1, :created_at, NULL);");
                 pc($st->execute(
                     [

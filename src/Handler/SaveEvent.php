@@ -53,8 +53,7 @@ class SaveEvent
             ]
         ), $st);
         if ($st = $st->fetch(PDO::FETCH_ASSOC)) {
-            if (
-                $st['group_name']        != $this->h->chattitle    ||
+            if ($st['group_name']        != $this->h->chattitle    ||
                 $st['group_username']    != $this->h->chatuname
             ) {
                 $st = DB::prepare("UPDATE `a_groups` SET `group_name`=:gname, `group_username`=:guname, `updated_at`=:up, `msg_count`=`msg_count`+1 WHERE `group_id`=:gid LIMIT 1;");
@@ -64,14 +63,16 @@ class SaveEvent
                         ":guname"    => $this->h->chatuname,
                         ":up"        => (date("Y-m-d H:i:s")),
                         ":gid"        => $this->h->chat_id
-                    ]), $st);
+                    ]
+                ), $st);
             } else {
                 $st = DB::prepare("UPDATE `a_groups` SET `updated_at`=:up, `msg_count`=`msg_count`+1 WHERE `group_id`=:gid LIMIT 1;");
                 pc($st->execute(
                     [
                         ":up"        => (date("Y-m-d H:i:s")),
                         ":gid"        => $this->h->chat_id
-                    ]), $st);
+                    ]
+                ), $st);
             }
         } else {
             $st = DB::prepare("INSERT INTO `a_groups` (`group_id`,`group_name`,`group_username`,`msg_count`,`max_warn`,`welcome_message`,`lang`,`created_at`) VALUES (:gid, :gname, :guname, 1, 3, null, 'en', :created_at);");
@@ -91,8 +92,7 @@ class SaveEvent
             ]
         ), $st);
         if ($st = $st->fetch(PDO::FETCH_ASSOC)) {
-            if (
-                $st['username'] != $this->h->username    ||
+            if ($st['username'] != $this->h->username    ||
                 $st['name']        != $this->h->name
             ) {
                 $st = DB::prepare("UPDATE `a_users` SET `username`=:uname, `name`=:name, `updated_at`=:up, `msg_count`=`msg_count`+1 WHERE `userid`=:userid LIMIT 1;");
@@ -170,7 +170,7 @@ class SaveEvent
                 [
                     "chat_id" => $this->h->chat_id
                 ]
-             )['content'], true) xor $admins = [':group_id' => $this->h->chat_id] xor $i = 1;
+            )['content'], true) xor $admins = [':group_id' => $this->h->chat_id] xor $i = 1;
             $query = "INSERT INTO `groups_admin` (`group_id`,`userid`,`status`,`privileges`,`created_at`,`updated_at`) VALUES ";
             $st = DB::prepare("INSERT INTO `a_users` (`userid`,`username`,`name`,`photo`,`msg_count`,`private`,`notification`,`lang`,`created_at`) VALUES (:userid, :uname, :name, :photo, 1, 'false', 'false', 'en', :created_at);");
             foreach ($rr['result'] as $val) {
@@ -207,8 +207,7 @@ class SaveEvent
             ]
         ), $st);
         if ($st = $st->fetch(PDO::FETCH_ASSOC)) {
-            if (
-                $st['username'] != $this->h->username    ||
+            if ($st['username'] != $this->h->username    ||
                 $st['name']        != $this->h->name        ||
                 $st['private']    != "true"
             ) {

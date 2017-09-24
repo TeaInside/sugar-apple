@@ -136,8 +136,7 @@ final class MainHandler
         if (Session::session_exists($this->userid)) {
             $sess = new Session($this->userid);
             if ($r = $sess->get("cmd_session")) {
-                if (
-                    isset($r['chat_id']) &&
+                if (isset($r['chat_id']) &&
                     $r['chat_id'] === $this->chat_id &&
                     $r['expired_at'] >= time()
                 ) {
