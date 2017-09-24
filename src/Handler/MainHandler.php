@@ -244,7 +244,7 @@ final class MainHandler
                             [
                                 "chat_id" => $this->chat_id,
                                 "text" => $r,
-                                "reply_to_message" => $this->replyto['message_id'],
+                                "reply_to_message_id" => $this->replyto['message_id'],
                                 "parse_mode" => "HTML"
                             ]
                         );
