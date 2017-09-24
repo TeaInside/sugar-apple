@@ -238,14 +238,16 @@ final class MainHandler
             if (substr($this->text, 0, 3) == "/s/") {
                 $a = explode("/", $this->text);
                 $r = "<b>Did you mean:</b>\n\"".preg_replace("#".$a[1]."#", $a[2], $this->replyto['text'])."\".";
-                return B::sendMessage(
-                    [
-                        "chat_id" => $this->chat_id,
-                        "text" => $r,
-                        "reply_to_message" => $this->replyto['message_id'],
-                        "parse_mode" => "HTML"
-                    ]
-                );
+                if ($r) {
+                    return B::sendMessage(
+                        [
+                            "chat_id" => $this->chat_id,
+                            "text" => $r,
+                            "reply_to_message" => $this->replyto['message_id'],
+                            "parse_mode" => "HTML"
+                        ]
+                    );
+                }
             }
         }
         if (in_array($this->msgtype, ["text", "photo", "sticker", "new_chat_member"])) {
