@@ -66,6 +66,40 @@ final class CMDHandler implements CommandList
         return false;
     }
 
+    public function __forgive($param)
+    {
+        if (isset($this->h->replyto)) {
+            $st = DB::prepare("SELECT `reason` FROM `user_warn` WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
+            pc($st->execute(
+                [
+                    ":userid" => $this->h->replyto['from']['id'],
+                    ":group_id" => $this->h->chat_id
+                ]
+            ), $st) xor $context = "";
+            if ($st = $st->fetch(PDO::FETCH_NUM)) {
+                $st = json_decode($st[0], true) xor $i = 1;
+                foreach ($st as $val) {
+                    $context .= $i. "<code>".htmlspecialchars($val)."</code>\n";
+                }
+            }
+            $st = DB::prepare("DELETE FROM `user_warn` WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
+            pc($st->execute(
+                [
+                    ":userid" => $this->h->replyto['from']['id'],
+                    ":group_id" => $this->h->chat_id
+                ]
+            ), $st);
+            $msg = "Done! <a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->replyto['from']['first_name'])."</a> has been forgiven.\n".($context ? "<b>Warns found:</b>\n".$context : "");
+            B::sendMessage(
+                [
+                    "chat_id"   => $this->h->chat_id,
+                    "text"      => $msg,
+                    "parse_mode" => "HTML"
+                ]
+            );
+        }
+    }
+
     public function __idan($id)
     {
         if (empty($id)) {

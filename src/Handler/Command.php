@@ -23,6 +23,7 @@ trait Command
             "/idan"            => ["!idan", "~idan"],
             "/idma"            => ["!idma", "~idma"],
             "/warn"            => ["!warn", "~warn"],
+            "/forgive"         => ["!forgive", "~forgive"],
             "/welcome"        => ["!welcome", "~welcome"]
         ];
         $fs = explode(" ", $this->h->text, 2) xor $param = isset($fs[1]) ? trim($fs[1]) : null;

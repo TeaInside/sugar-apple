@@ -175,7 +175,9 @@ final class MainHandler
         isset($this->input['message']['reply_to_message'])    and $this->replyto   = $this->input['message']['reply_to_message'];
         isset($this->input['message']['chat']['username'])    and $this->chatuname = strtolower($this->input['message']['chat']['username']);
         isset($this->input['message']['entities'])            and $this->entities  = $this->input['message']['entities'];
-        if (isset($this->input['message']['text'])) {
+        if (isset($this->input['inline_query'])) {
+            $this->msgid = $this->input['inline_query']['id'];
+        } elseif (isset($this->input['message']['text'])) {
             $this->msgtype    = "text";
             $this->chattype    = $this->input['message']['chat']['type'];
             $this->text         = $this->input['message']['text'];
