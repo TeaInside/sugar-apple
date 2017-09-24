@@ -234,6 +234,19 @@ final class MainHandler
 
     private function response()
     {
+        if ($msgtype === "text" && isset($this->replyto['text'])) {
+            if (substr($this->text, 0, 3) == "/s/") {
+                $a = explode("/", $this->text);
+                $r = "<b>Did you mean:</b>\n\"".preg_replace($a[1], $a[2], $this->replyto['text'])."\".";
+                return B::sendMessage(
+                    [
+                        "chat_id" => $this->chat_id,
+                        "text" => $r,
+                        "reply_to_message" => $this->replyto['message_id']
+                    ]
+                );
+            }
+        }
         if (in_array($this->msgtype, ["text", "photo", "sticker", "new_chat_member"])) {
             $res = new Response($this);
             $res->exec();
