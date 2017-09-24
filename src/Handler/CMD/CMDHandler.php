@@ -79,7 +79,7 @@ final class CMDHandler implements CommandList
             if ($st = $st->fetch(PDO::FETCH_NUM)) {
                 $st = json_decode($st[0], true) xor $i = 1;
                 foreach ($st as $val) {
-                    $context .= $i. "<code>".htmlspecialchars($val)."</code>\n";
+                    $context .= ($i++). "<code>".htmlspecialchars($val)."</code>\n";
                 }
             }
             $st = DB::prepare("DELETE FROM `user_warn` WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
@@ -89,7 +89,7 @@ final class CMDHandler implements CommandList
                     ":group_id" => $this->h->chat_id
                 ]
             ), $st);
-            $msg = "Done! <a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->replyto['from']['first_name'])."</a> has been forgiven.\n".($context ? "<b>Warns found:</b>\n".$context : "");
+            $msg = "Done! <a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a> has been forgiven.\n".($context ? "<b>Warns found:</b>\n".$context : "");
             B::sendMessage(
                 [
                     "chat_id"   => $this->h->chat_id,
