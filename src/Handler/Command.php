@@ -73,6 +73,9 @@ trait Command
             case '/welcome':
                 return $cmd->__welcome($param);
                 break;
+            case '/forgive':
+                return $cmd->__forgive($param);
+                break;
             default:
                 break;
         }
