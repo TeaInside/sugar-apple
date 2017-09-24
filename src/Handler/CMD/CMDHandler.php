@@ -68,6 +68,32 @@ final class CMDHandler implements CommandList
 
     public function __forgive($param)
     {
+        if (in_array($this->h->userid, SUDOERS) or in_array($this->h->userid, GLOBAL_ADMIN)) {
+            $flag = true;
+        } else {
+            $st = DB::prepare("SELECT `status` FROM `groups_admin` WHERE `userid`=:uid AND `group_id`=:gid LIMIT 1;");
+            pc($st->execute(
+                [
+                    ":uid" => $this->h->userid,
+                    ":gid"      => $this->h->chat_id
+                ]
+            ), $st);
+            if ($st = $st->fetch(PDO::FETCH_NUM)) {
+                $flag = true;
+            } else {
+                $flag = false;
+            }
+        }
+        if (!$flag) {
+            B::sendMessage(
+                [
+                    "chat_id" => $this->h->chat_id,
+                    "text"      => "You're not allowed to use this command!",
+                    "reply_to_message_id" => $this->h->msgid
+                ]
+            );
+            return 1;
+        }
         if (isset($this->h->replyto)) {
             $st = DB::prepare("SELECT `reason` FROM `user_warn` WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
             pc($st->execute(
@@ -455,6 +481,32 @@ final class CMDHandler implements CommandList
 
     public function __warn($param)
     {
+        if (in_array($this->h->userid, SUDOERS) or in_array($this->h->userid, GLOBAL_ADMIN)) {
+            $flag = true;
+        } else {
+            $st = DB::prepare("SELECT `status` FROM `groups_admin` WHERE `userid`=:uid AND `group_id`=:gid LIMIT 1;");
+            pc($st->execute(
+                [
+                    ":uid" => $this->h->userid,
+                    ":gid"      => $this->h->chat_id
+                ]
+            ), $st);
+            if ($st = $st->fetch(PDO::FETCH_NUM)) {
+                $flag = true;
+            } else {
+                $flag = false;
+            }
+        }
+        if (!$flag) {
+            B::sendMessage(
+                [
+                    "chat_id" => $this->h->chat_id,
+                    "text"      => "You're not allowed to use this command!",
+                    "reply_to_message_id" => $this->h->msgid
+                ]
+            );
+            return 1;
+        }
         if (isset($this->h->replyto)) {
             $param = !empty($param) ? $param : null;
             $sq = DB::prepare("SELECT `max_warn` FROM `a_groups` WHERE `group_id`=:group_id LIMIT 1;");
