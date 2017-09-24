@@ -4,7 +4,7 @@ namespace Lang;
 
 final class Map
 {
-    final public static $language = [
+    public static $language = [
         "id" => "\\Lang\\ID\\",
         "en" => "\\Lang\\En"
     ];
