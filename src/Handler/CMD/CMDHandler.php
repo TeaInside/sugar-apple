@@ -518,7 +518,7 @@ final class CMDHandler implements CommandList
                     ":userid" => $this->h->replyto['from']['id'],
                     ":group_id" => $this->h->chat_id
                 ]
-            ), $st) xor $nl = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a>";
+            ), $st) xor $nl = "<a href=\"tg://user?id=".$this->h->replyto['from']['id']."\">".htmlspecialchars($this->h->replyto['from']['first_name'])."</a>";
             if ($st = $st->fetch(PDO::FETCH_NUM)) {
                 $st[1] = json_decode($st[1], true);
                 $st[1][] = [
