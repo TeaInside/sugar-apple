@@ -483,7 +483,7 @@ final class CMDHandler implements CommandList
                     )['content']) != '{"ok":true,"result":true}') and $err = "Error : <code>\n".htmlspecialchars(json_decode($rr, true)['description'])."</code>" or $err = "";
                     B::sendMessage(
                         [
-                            "text" => $nl." <b>banned</b>: reached the max number of warnings (<code>".($st[0])."/".$sq[0]."</code>)",
+                            "text" => $nl." <b>banned</b>: reached the max number of warnings (<code>".($st[0])."/".$sq[0]."</code>)\n\n".$err,
                             "chat_id" => $this->h->chat_id,
                             "parse_mode" => "HTML"
                         ]
