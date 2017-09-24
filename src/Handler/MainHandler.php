@@ -237,16 +237,18 @@ final class MainHandler
         if ($this->msgtype === "text" && isset($this->replyto['text'])) {
             if (substr($this->text, 0, 3) == "/s/") {
                 $a = explode("/", $this->text);
-                $r = "<b>Did you mean:</b>\n\"".str_replace($a[1], $a[2], $this->replyto['text'])."\".";
-                if ($r) {
-                    return B::sendMessage(
-                        [
-                            "chat_id" => $this->chat_id,
-                            "text" => $r,
-                            "reply_to_message" => $this->replyto['message_id'],
-                            "parse_mode" => "HTML"
-                        ]
-                    );
+                if (isset($a[2], $a[3])) {
+                    $r = "<b>Did you mean:</b>\n\"".str_replace($a[2], $a[3], $this->replyto['text'])."\".";
+                    if ($r) {
+                        return B::sendMessage(
+                            [
+                                "chat_id" => $this->chat_id,
+                                "text" => $r,
+                                "reply_to_message" => $this->replyto['message_id'],
+                                "parse_mode" => "HTML"
+                            ]
+                        );
+                    }
                 }
             }
         }
