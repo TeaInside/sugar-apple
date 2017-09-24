@@ -4,7 +4,7 @@ namespace Contracts\AppContracts;
 
 interface Virtualizor
 {
-	public function __construct($code);
+    public function __construct($code);
 
-	public function exec();
+    public function exec();
 }

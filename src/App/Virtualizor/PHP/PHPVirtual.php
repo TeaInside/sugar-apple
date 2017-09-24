@@ -14,44 +14,44 @@ use Contracts\AppContracts\Virtualizor as VirtualizorContract;
  */
 class PHPVirtual implements VirtualizorContract
 {
-	/**
-	 * @var string
-	 */
-	private $phpcode;
+    /**
+     * @var string
+     */
+    private $phpcode;
 
-	/**
-	 * @var string
-	 */
-	private $hash;
+    /**
+     * @var string
+     */
+    private $hash;
 
-	/**
-	 * Constructor.
-	 * @param string $phpcode
-	 */
-	public function __construct($phpcode)
-	{
-		$this->phpcode = $phpcode;
-		$this->hash	   = sha1($phpcode);
-		$this->__init();
-	}
+    /**
+     * Constructor.
+     * @param string $phpcode
+     */
+    public function __construct($phpcode)
+    {
+        $this->phpcode = $phpcode;
+        $this->hash       = sha1($phpcode);
+        $this->__init();
+    }
 
-	private function __init()
-	{
-		is_dir(PHPVIRTUAL_DIR) or shell_exec("mkdir -p ".PHPVIRTUAL_DIR);
-		if (! file_exists(PHPVIRTUAL_DIR."/".$this->hash.".php")) {
-			file_put_contents(PHPVIRTUAL_DIR."/".$this->hash.".php", $this->phpcode);
-		}
-	}
+    private function __init()
+    {
+        is_dir(PHPVIRTUAL_DIR) or shell_exec("mkdir -p ".PHPVIRTUAL_DIR);
+        if (! file_exists(PHPVIRTUAL_DIR."/".$this->hash.".php")) {
+            file_put_contents(PHPVIRTUAL_DIR."/".$this->hash.".php", $this->phpcode);
+        }
+    }
 
-	public function exec()
-	{
-		$ch = new Curl(PHPVIRTUAL_URL."/".$this->hash.".php");
-		$r1 = [
-			"<br />", "<br>", PHPVIRTUAL_DIR."/".$this->hash.".php"
-		];
-		$r2 = [
-			"\n", "\n", "/tmp/php_virtual/".substr($this->hash, 0, 5).".php"
-		];
-		return str_replace($r1, $r2, $ch->exec());
-	}
+    public function exec()
+    {
+        $ch = new Curl(PHPVIRTUAL_URL."/".$this->hash.".php");
+        $r1 = [
+            "<br />", "<br>", PHPVIRTUAL_DIR."/".$this->hash.".php"
+        ];
+        $r2 = [
+            "\n", "\n", "/tmp/php_virtual/".substr($this->hash, 0, 5).".php"
+        ];
+        return str_replace($r1, $r2, $ch->exec());
+    }
 }

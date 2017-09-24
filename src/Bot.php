@@ -8,17 +8,17 @@ use Handler\MainHandler;
 
 final class Bot
 {
-	/**
-	 *
-	 */
-	public function __construct($input)
-	{
-		$this->input = $input;
-	}
+    /**
+     *
+     */
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
 
-	public function run()
-	{
-		$app = new MainHandler($this->input);
-		$app->run();
-	}
+    public function run()
+    {
+        $app = new MainHandler($this->input);
+        $app->run();
+    }
 }
