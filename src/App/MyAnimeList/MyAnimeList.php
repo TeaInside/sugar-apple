@@ -9,8 +9,8 @@ namespace App\MyAnimeList;
  */
 
 use Curl;
-use App\MyAnimeList\MyAnimeListContract;
 use App\MyAnimeList\MyAnimeListException;
+use Contracts\AppContracts\MyAnimeListContract;
 
 defined("data") or die("Data not defined !\n");
 
