@@ -79,7 +79,7 @@ final class CMDHandler implements CommandList
             if ($st = $st->fetch(PDO::FETCH_NUM)) {
                 $st = json_decode($st[0], true) xor $i = 1;
                 foreach ($st as $val) {
-                    $context .= ($i++). "<code>".htmlspecialchars($val['forgive'])."</code>\n";
+                    $context .= ($i++). "<code>".($val['reason'] ? htmlspecialchars($val['reason']) : "Normal warn")."</code>\n";
                 }
             }
             $st = DB::prepare("DELETE FROM `user_warn` WHERE `userid`=:userid AND `group_id`=:group_id LIMIT 1;");
