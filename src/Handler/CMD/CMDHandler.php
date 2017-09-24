@@ -328,7 +328,7 @@ final class CMDHandler implements CommandList
             $st = DB::prepare("SELECT `status` FROM `groups_admin` WHERE `userid`=:uid AND `group_id`=:gid LIMIT 1;");
             pc($st->execute(
                 [
-                    ":userid" => $this->h->userid,
+                    ":uid" => $this->h->userid,
                     ":gid"      => $this->h->chat_id
                 ]
             ), $st);
