@@ -8,6 +8,7 @@ use Lang\Map;
 use Telegram as B;
 use Handler\Session;
 use Handler\MainHandler;
+use Contracts\CommandList;
 use App\MyAnimeList\MyAnimeList;
 
 /**
@@ -15,7 +16,7 @@ use App\MyAnimeList\MyAnimeList;
  * @license MIT
  */
 
-class CMDHandler
+final class CMDHandler implements CommandList
 {
 	/**
 	 * @var Handler\MainHandler
