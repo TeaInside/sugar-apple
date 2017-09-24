@@ -55,7 +55,7 @@ final class CMDHandler implements CommandList
 	public function __start($param)
 	{
 		if ($this->h->chattype == "private") {
-			$this->lang .= "A";
+			$this->lang .= "Basic";
 			return B::sendMessage(
 				[
 					"chat_id" => $this->h->chat_id,
@@ -141,7 +141,7 @@ final class CMDHandler implements CommandList
 			return B::sendMessage(
 				[
 					"chat_id" => $this->h->chat_id,
-					"text"	  => "Sebutkan ID anime!",
+					"text"	  => $this->fixer($this->lang::$a['manga_id']),
 					"reply_to_message_id" => $this->h->msgid,
 					"reply_markup" => json_encode(["force_reply"=>true,"selective"=>true])
 				]
@@ -192,6 +192,7 @@ final class CMDHandler implements CommandList
 
 	public function __manga($query)
 	{
+		$this->lang .= "MyAnimeList";
 		if (empty($query)) {
 			$sess = new Session($this->h->userid);
 			$exe = $sess->set("manga_cmd", [
@@ -203,7 +204,7 @@ final class CMDHandler implements CommandList
 			return B::sendMessage(
 				[
 					"chat_id" => $this->h->chat_id,
-					"text"	  => "Manga apa yang ingin kamu cari?",
+					"text"	  => $this->fixer($this->lang::$a['manga_query']),
 					"reply_to_message_id" => $this->h->msgid,
 					"reply_markup" => json_encode(["force_reply"=>true,"selective"=>true])
 				]
@@ -500,7 +501,7 @@ final class CMDHandler implements CommandList
 
 	public function __welcome($param)
 	{
-		$this->lang .= "A";
+		$this->lang .= "Basic";
 		if (! empty($param)) {
 			$st = DB::prepare("UPDATE `a_groups` SET `welcome_message`=:wel, `updated_at`=:up WHERE `group_id`=:gid LIMIT 1;");
 			pc($st->execute(
