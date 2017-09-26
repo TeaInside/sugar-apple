@@ -583,6 +583,14 @@ final class CMDHandler implements CommandList
         }
     }
 
+    public function __unban($param)
+    {
+        B::unbanChatMember(
+            [
+            ]
+        );
+    }
+
     public function __welcome($param)
     {
         $this->lang .= "Basic";
