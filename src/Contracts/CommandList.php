@@ -20,6 +20,8 @@ interface CommandList
 
     public function __ban($param);
 
+    public function __unban($param);
+
     public function __sh($param);
 
     public function __warn($param);
