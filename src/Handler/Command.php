@@ -17,6 +17,7 @@ trait Command
             "/sh"            => ["!sh", "~sh", "/shexec", "!shexec", "~shexec", "shexec"],
             "/me"            => ["!me", "~me"],
             "/ban"            => ["!ban", "~ban", "/banned", "!banned", "~banned"],
+            "/debug"        => ["!debug", "/debug", "/d", "!d"],
             "/start"        => ["!start", "~start"],
             "/anime"        => ["!anime", "~anime"],
             "/manga"        => ["!manga", "~manga"],
@@ -47,6 +48,9 @@ trait Command
     {
         $cmd = new CMDHandler($this->h);
         switch ($key) {
+            case '/debug':
+                return $cmd->__debug($param);
+                break;
             case '/start':
                 return $cmd->__start($param);
                 break;
