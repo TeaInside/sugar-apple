@@ -38,13 +38,33 @@ final class Response
             ), $st);
             if ($st = $st->fetch(PDO::FETCH_NUM)) {
                 if (! empty($st[0])) {
-                    return B::sendMessage(
-                        [
-                            "chat_id"                => $this->h->chat_id,
-                            "text"                    => $st[0],
-                            "reply_to_message_id"    => $this->h->msgid
-                        ]
-                    );
+                    foreach ($this->h->input['new_chat_members'] as $key => $value) {
+                            $name = htmlspecialchars($value['first_name'] . (isset($value['last_name']) ? " ".$value['last_name'] : ""));
+                            $namelink = "<a href=\"tg://user?id=".$value['id']."\">".$name."</a>";
+
+                            $r1 = [
+                                "{name}",
+                                "{namelink}",
+                                "{username}"
+                            ];
+                            $r2 = [
+                                $name,
+                                $namelink,
+                                (isset($value['username']) ? $value['username'] : ""),
+
+                            ];
+                            
+                            B::sendMessage(
+                                [
+                                    "chat_id"                => $this->h->chat_id,
+                                    "text"                    => str_replace($r1, $r2, $st[0]),
+                                    "reply_to_message_id"    => $this->h->msgid,
+                                    "parse_mode" => "HTML"
+                                ]
+                            );
+                    }
+                    
+                    return true;
                 }
             }
         }
