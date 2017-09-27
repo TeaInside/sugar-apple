@@ -236,7 +236,6 @@ final class MainHandler
 
     private function parseEntities()
     {
-        var_dump($this->input['message']['entities']);
         if (isset($this->input['message']['entities'])) {
             foreach ($this->input['message']['entities'] as $val) {
                 if ($val['type'] === "mention") {
@@ -244,6 +243,7 @@ final class MainHandler
                 }
             }
         }
+        var_dump($this->entities);
     }
 
     private function response()
