@@ -33,13 +33,14 @@ class Notification
 				pc($st->execute([
 					":uname" => $val
 				]), $st);
-				$msg = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->name)."</a> tagged you in ".$group."\n<code>".htmlspecialchars($this->h->text)."</code>";
+				$msg = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->name)."</a> tagged you in ".$group."\n\n<code>".htmlspecialchars($this->h->text)."</code>";
 				if ($st = $st->fetch(PDO::FETCH_NUM)) {
 					B::sendMessage(
 						[
 							"chat_id" => $st[0],
 							"text" => $msg,
-							"parse_mode" => "HTML"
+							"parse_mode" => "HTML",
+							"disable_web_page_preview" => true
 						]
 					);
 				}
