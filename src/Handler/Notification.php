@@ -51,7 +51,7 @@ class Notification
 			$group = isset($this->h->chatuname) ? "<a href=\"https://t.me/".$this->h->chatuname."/".$this->h->msgid."\">".htmlspecialchars($this->h->name)."</a>" : "<b>".htmlspecialchars($this->h->chattitle)."</b>";
 			$st = DB::prepare("SELECT `userid`,`private` FROM `a_users` WHERE `userid`=:userid LIMIT 1;");
 			pc($st->execute([
-				":uname" => $this->h->replyto['from']['id']
+				":userid" => $this->h->replyto['from']['id']
 			]), $st);
 			$msg = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->name)."</a> replied to your message in ".$group."\n\n<code>".htmlspecialchars($this->h->text)."</code>";
 			if ($st = $st->fetch(PDO::FETCH_NUM) and $st[1] == "true") {
