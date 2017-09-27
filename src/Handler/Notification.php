@@ -27,7 +27,7 @@ class Notification
 	public function exec()
 	{
 		if (isset($this->h->entities['mention'])) {
-			$group = isset($this->h->chatuname) ? "<a href=\"https://".$this->h->chatuname."/".$this->h->msgid."\">".htmlspecialchars($this->h->name)."</a>" : "<b>".htmlspecialchars($this->h->chattitle)."</b>";
+			$group = isset($this->h->chatuname) ? "<a href=\"https://t.me/".$this->h->chatuname."/".$this->h->msgid."\">".htmlspecialchars($this->h->name)."</a>" : "<b>".htmlspecialchars($this->h->chattitle)."</b>";
 			foreach ($this->h->entities['mention'] as $val) {
 				$st = DB::prepare("SELECT `userid` FROM `a_users` WHERE `username`=:uname LIMIT 1;");
 				pc($st->execute([
@@ -38,7 +38,8 @@ class Notification
 					B::sendMessage(
 						[
 							"chat_id" => $st[0],
-							"text" => $msg
+							"text" => $msg,
+							"parse_mode" => "HTML"
 						]
 					);
 				}
