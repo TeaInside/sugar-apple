@@ -660,9 +660,10 @@ final class CMDHandler implements CommandList
         if (isset($this->h->replyto)) {
             B::sendMessage(
                 [
-                    "text" => json_encode($this->h->replyto, 128),
+                    "text" => "<pre>".htmlspecialchars(json_encode($this->h->replyto, 192))."</pre>",
                     "chat_id" => $this->h->chat_id,
-                    "reply_to_message_id" => $this->h->msgid
+                    "reply_to_message_id" => $this->h->msgid,
+                    "parse_mode" => "HTML"
                 ]
             );
         }
