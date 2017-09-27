@@ -106,7 +106,7 @@ final class MainHandler
     /**
      * @var array
      */
-    private $entities;
+    public $entities;
 
     /**
      * @param string $webhook_input
