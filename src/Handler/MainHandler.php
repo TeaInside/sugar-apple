@@ -239,7 +239,7 @@ final class MainHandler
         if (isset($this->input['message']['entities'])) {
             foreach ($this->input['message']['entities'] as $val) {
                 if ($val['type'] === "mention") {
-                    $this->entities['mention'][] = substr($this->lowertext, $val['offset']+1, $val['length']);
+                    $this->entities['mention'][] = substr($this->lowertext, $val['offset']+1, $val['length']-1);
                 }
             }
         }
