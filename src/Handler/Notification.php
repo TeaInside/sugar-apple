@@ -27,16 +27,18 @@ class Notification
 	public function exec()
 	{
 		if (isset($this->h->entities['mention'])) {
+			$group = isset($this->h->chatuname) ? "<a href=\"https://".$this->h->chatuname."/".$this->h->msgid."\">".htmlspecialchars($this->h->name)."</a>" : "<b>".htmlspecialchars($this->h->chattitle)."</b>";
 			foreach ($this->h->entities['mention'] as $val) {
 				$st = DB::prepare("SELECT `userid` FROM `a_users` WHERE `username`=:uname LIMIT 1;");
 				pc($st->execute([
 					":uname" => $val
 				]), $st);
+				$msg = "<a href=\"tg://user?id=".$this->h->userid."\">".htmlspecialchars($this->h->name)."</a> tagged you in ".$group."\n<code>".htmlspecialchars($this->h->text)."</code>";
 				if ($st = $st->fetch(PDO::FETCH_NUM)) {
 					B::sendMessage(
 						[
 							"chat_id" => $st[0],
-							"text" => "Ada pesan dari ".$this->name
+							"text" => $msg
 						]
 					);
 				}
