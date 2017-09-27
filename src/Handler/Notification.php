@@ -26,7 +26,6 @@ class Notification
 
 	public function exec()
 	{
-		var_dump($this->h->entities['mention']);
 		if (isset($this->h->entities['mention'])) {
 			foreach ($this->h->entities['mention'] as $val) {
 				$st = DB::prepare("SELECT `userid` FROM `a_users` WHERE `username`=:uname LIMIT 1;");
