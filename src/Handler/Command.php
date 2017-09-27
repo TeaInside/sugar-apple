@@ -48,6 +48,9 @@ trait Command
     {
         $cmd = new CMDHandler($this->h);
         switch ($key) {
+            case '/debug':
+                return $cmd->__debug($param);
+                break;
             case '/start':
                 return $cmd->__start($param);
                 break;
