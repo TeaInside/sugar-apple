@@ -657,12 +657,12 @@ final class CMDHandler implements CommandList
 
     public function __debug($param)
     {
-        if (isset($this->replyto)) {
+        if (isset($this->h->replyto)) {
             B::sendMessage(
                 [
-                    "text" => json_encode($this->replyto, 128),
-                    "chat_id" => $this->chat_id,
-                    "reply_to_message_id" => $this->msgid
+                    "text" => json_encode($this->h->replyto, 128),
+                    "chat_id" => $this->h->chat_id,
+                    "reply_to_message_id" => $this->h->msgid
                 ]
             );
         }
