@@ -59,7 +59,8 @@ final class Response
                                     "chat_id"                => $this->h->chat_id,
                                     "text"                    => str_replace($r1, $r2, $st[0]),
                                     "reply_to_message_id"    => $this->h->msgid,
-                                    "parse_mode" => "HTML"
+                                    "parse_mode" => "HTML",
+                                    "disable_web_page_preview" => true
                                 ]
                             );
                     }
