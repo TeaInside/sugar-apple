@@ -6,6 +6,7 @@ use Telegram as B;
 use Handler\Session;
 use Handler\Response;
 use Handler\SaveEvent;
+use Handler\Notification;
 use Handler\CMD\CMDHandler;
 use Handler\VirtualizorHandler;
 
@@ -272,6 +273,8 @@ final class MainHandler
 
     private function save_event()
     {
+        $app = new Notification($this);
+        $app->exec();
         if (in_array($this->msgtype, ["text", "photo", "sticker"])) {
             $se = new SaveEvent($this);
             $se->exec();
