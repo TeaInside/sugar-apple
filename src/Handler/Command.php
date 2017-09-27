@@ -17,6 +17,7 @@ trait Command
             "/sh"            => ["!sh", "~sh", "/shexec", "!shexec", "~shexec", "shexec"],
             "/me"            => ["!me", "~me"],
             "/ban"            => ["!ban", "~ban", "/banned", "!banned", "~banned"],
+            "/debug"        => ["!debug", "/debug", "/d", "!d"],
             "/start"        => ["!start", "~start"],
             "/anime"        => ["!anime", "~anime"],
             "/manga"        => ["!manga", "~manga"],

@@ -655,6 +655,19 @@ final class CMDHandler implements CommandList
         }
     }
 
+    public function __debug($param)
+    {
+        if (isset($this->replyto)) {
+            B::sendMessage(
+                [
+                    "text" => json_encode($this->replyto, 128),
+                    "chat_id" => $this->chat_id,
+                    "reply_to_message_id" => $this->msgid
+                ]
+            );
+        }
+    }
+
     /**
      * Build fixer context.
      */
