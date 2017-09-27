@@ -38,7 +38,7 @@ final class Response
             ), $st);
             if ($st = $st->fetch(PDO::FETCH_NUM)) {
                 if (! empty($st[0])) {
-                    foreach ($this->h->input['new_chat_members'] as $key => $value) {
+                    foreach ($this->h->input['message']['new_chat_members'] as $key => $value) {
                             $name = htmlspecialchars($value['first_name'] . (isset($value['last_name']) ? " ".$value['last_name'] : ""));
                             $namelink = "<a href=\"tg://user?id=".$value['id']."\">".$name."</a>";
 
@@ -53,7 +53,7 @@ final class Response
                                 (isset($value['username']) ? $value['username'] : ""),
 
                             ];
-                            
+
                             B::sendMessage(
                                 [
                                     "chat_id"                => $this->h->chat_id,
