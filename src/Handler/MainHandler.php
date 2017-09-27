@@ -96,15 +96,16 @@ final class MainHandler
      */
     public $chatuname;
 
-    /**
-     * @var array|null
-     */
-    public $entities;
 
     /**
      * @var bool
      */
     private $session_action = false;
+
+    /**
+     * @var array
+     */
+    private $entities;
 
     /**
      * @param string $webhook_input
@@ -121,6 +122,7 @@ final class MainHandler
     public function run()
     {
         $this->parseEvent();
+        $this->parseEntities();
         $this->parseSession();
         if (! $this->session_action) {
             $vir = new VirtualizorHandler($this);
@@ -174,7 +176,6 @@ final class MainHandler
         isset($this->input['message']['chat']['title'])    and $this->chattitle = $this->input['message']['chat']['title'];
         isset($this->input['message']['reply_to_message'])    and $this->replyto   = $this->input['message']['reply_to_message'];
         isset($this->input['message']['chat']['username'])    and $this->chatuname = strtolower($this->input['message']['chat']['username']);
-        isset($this->input['message']['entities'])            and $this->entities  = $this->input['message']['entities'];
         if (isset($this->input['inline_query'])) {
             $this->msgid = $this->input['inline_query']['id'];
         } elseif (isset($this->input['message']['text'])) {
@@ -229,6 +230,17 @@ final class MainHandler
             $this->msgid        = $this->input['message']['message_id'];
             $this->date            = $this->input['message']['date'];
             $this->chat_id        = $this->input['message']['chat']['id'];
+        }
+    }
+
+    private function parseEntities()
+    {
+        if (isset($this->input['message']['entities'])) {
+            foreach ($this->input['message']['entities'] as $val) {
+                if ($val['type'] === "mention") {
+                    $this->entities['mention'][] = substr($this->lowertext, $val['offset']+1, $val['length']);
+                }
+            }
         }
     }
 
