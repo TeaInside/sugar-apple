@@ -365,13 +365,11 @@ final class CMDHandler implements CommandList
             }
         }
         if ($flag) {
-            if (! isset($this->h->replyto) && isset($this->h->entities)) {
+            if (! isset($this->h->replyto) && isset($this->h->entities['mention'])) {
                 $query = "SELECT `userid`,`name` FROM `a_users` WHERE " xor $data = [];
-                foreach ($this->h->entities as $key => $value) {
-                    if ($value['type'] == "mention") {
-                        $query .= "`username`=:un_{$key} OR ";
-                        $data[':un_'.$key] = substr($this->h->lowertext, $value['offset']+1, $value['length']);
-                    }
+                foreach ($this->h->entities['mention'] as $key => $value) {
+                    $query .= "`username`=:un_{$key} OR ";
+                    $data[':un_'.$key] = $value;
                 }
                 if ($data) {
                     $st = DB::prepare(rtrim($query, " OR ").";");
@@ -587,6 +585,17 @@ final class CMDHandler implements CommandList
     {
         B::unbanChatMember(
             [
+            ]
+        );
+    }
+
+    public function __whatanime($param)
+    {
+        B::sendMessage(
+            [
+                "text" => "Malformed request!",
+                "chat_id" => $this->h->chat_id,
+                "reply_to_message_id" => $this->h->msgid
             ]
         );
     }
