@@ -48,6 +48,32 @@ final class CMDHandler implements CommandList
         $this->buildContext();
     }
 
+    public function __help($param)
+    {
+
+$msg = "/anime [spasi] <i>judul_anime</i> : Pencarian anime.
+/idan [spasi] <i>id_anime</i> : Info anime.
+
+/manga [spasi] <i>judul_anime</i> : Pencarian manga.
+/idma [spasi] <i>id_manga</i> : Info manga.
+";
+
+        if ($this->h->chattype == "private") {
+            B::sendMessage(
+                [
+                    "chat_id" => $this->h->chat_id,
+                    "text" => $msg,
+                    "parse_mode" => "HTML"
+                ]
+            );
+        }
+    }
+
+    public function __report($param)
+    {
+        DB::prepare("SELECT `userid` FROM ``");
+    }
+
     /**
      * @param  string $param
      * @return string|bool

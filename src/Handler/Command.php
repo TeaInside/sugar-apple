@@ -16,6 +16,7 @@ trait Command
         $cmd_list = [
             "/sh"            => ["!sh", "~sh", "/shexec", "!shexec", "~shexec", "shexec"],
             "/me"            => ["!me", "~me"],
+            "/help"          => ["!help", "~help"],
             "/ban"            => ["!ban", "~ban", "/banned", "!banned", "~banned"],
             "/debug"        => ["!debug", "/debug", "/d", "!d"],
             "/start"        => ["!start", "~start"],
@@ -24,6 +25,7 @@ trait Command
             "/idan"            => ["!idan", "~idan"],
             "/idma"            => ["!idma", "~idma"],
             "/warn"            => ["!warn", "~warn"],
+            "/report"          => ["!report", "~report"],
             "/forgive"         => ["!forgive", "~forgive"],
             "/welcome"        => ["!welcome", "~welcome"]
         ];
@@ -48,6 +50,9 @@ trait Command
     {
         $cmd = new CMDHandler($this->h);
         switch ($key) {
+            case '/help':
+                return $cmd->__help($param);
+                break;
             case '/debug':
                 return $cmd->__debug($param);
                 break;
@@ -74,6 +79,10 @@ trait Command
                 break;
             case '/warn':
                 return $cmd->__warn($param);
+                break;
+            case '/report':
+                return $cmd->__report($param);
+                break;
             case '/welcome':
                 return $cmd->__welcome($param);
                 break;
@@ -85,3 +94,4 @@ trait Command
         }
     }
 }
+,
